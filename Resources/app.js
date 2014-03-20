@@ -37,7 +37,7 @@ if (Ti.version < 1.8) {
         return Math.min(
           Ti.Platform.displayCaps.platformHeight,
           Ti.Platform.displayCaps.platformWidth
-        ) >= 400
+        ) >= 400;
     }
   }
 

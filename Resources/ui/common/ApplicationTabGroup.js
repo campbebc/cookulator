@@ -603,6 +603,7 @@ decimalPointConcatenated = false;
 
 }
 
+//Add all buttons to first tab
 win1.add(textbox);
 win1.add(clearButton);
 win1.add(sevenButton);
@@ -625,10 +626,11 @@ win1.add(multiplyButton);
 // Tab 2 that displays following
 	var tab2 = Ti.UI.createTab({
 		title: L('Conversion'),
-		icon: '/images/conversion.png',		
+		icon: '/images/conversion.png',
 		window: win2
 	});
-	
+
+//Distance button opens distance measurement tables
 var distanceButton = Titanium.UI.createButton({
 title: 'Distance',
 color:'#000000',
@@ -641,9 +643,7 @@ height: "40dp",
 font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
-/* The Five Button enables the user to produce a 
-  character of '5' to be concatenated to the
-  current value of the textbox. */
+//Weight button opens weight measurement tables
 var weightButton = Titanium.UI.createButton({
 title: 'Weight',
 color:'#000000',
@@ -656,9 +656,7 @@ height: "40dp",
 font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
-/* The Six Button enables the user to produce a 
-  character of '6' to be concatenated to the
-  current value of the textbox. */
+//Volume button opens volume measurement tables
 var volumeButton = Titanium.UI.createButton({
 title: 'Volume',
 color:'#000000',
@@ -670,7 +668,8 @@ width: "80dp",
 height: "40dp",
 font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });	
-	
+
+//Cooking Button opens common cooking measurement tables	
 var cookingButton = Titanium.UI.createButton({
 title: 'Cooking',
 color:'#000000',
@@ -683,26 +682,126 @@ height: "40dp",
 font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });		
 
+//Add all buttons to second tab
 win2.add(distanceButton);
 win2.add(weightButton);
 win2.add(volumeButton);
 win2.add(cookingButton);
 
-distanceButton.addEventListener('click', function(e) {
-
+//Text field for user to enter initial value to be converted
+var entry = Titanium.UI.createTextField({
+color: '#000000',
+backgroundColor: '#FFFFFF',
+keyboardType: Ti.UI.KEYBOARD_DECIMAL_PAD,
+top: "70dp",
+left: "5dp",
+width: "310dp",
+height: "40dp",
+enabled: true, // enables OS keyboard to launch
+textAlign: 'left',
+font:{fontSize:"30dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+placeholder: 'Enter initial value', // Display on initial launches
+enableReturnKey: true,
+suppressReturn : false,
+hintText: 'Enter initial value'
 });
 
-weightButton.addEventListener('click', function(e) {
-
+//Set a maximum of 10 characters for text field entry
+entry.addEventListener('change', function(e){
+    e.source.value = e.source.value.slice(0,10);
 });
 
-volumeButton.addEventListener('click', function(e) {
-
+//Blur keyboard upon click
+win2.addEventListener("click", function(e){
+	entry.blur();
 });
 
-cookingButton.addEventListener('click', function(e) {
+//Add text field to window
+win2.add(entry);
 
+//First distance table entry
+var distance1 = [
+	{title: "Millimeter (mm)", val:"millimeter"},
+	{title: "Centimeter (cm)", val:"centimeter"},
+	{title: "Meter (m)", val:"meter"},
+	{title: "Inch (in)", val:"inch"},
+	{title: "Feet (ft)", val:"feet"},
+	{title: "Yard (yd)", val:"yard"},
+	{title: "Mile (mi)", val:"mile"}
+];
+
+//Second distance table entry
+var distance2 = [
+	{title: "Millimeter (mm)", val:"millimeter"},
+	{title: "Centimeter (cm)", val:"centimeter"},
+	{title: "Meter (m)", val:"meter"},
+	{title: "Inch (in)", val:"inch"},
+	{title: "Feet (ft)", val:"feet"},
+	{title: "Yard (yd)", val:"yard"},
+	{title: "Mile (mi)", val:"mile"}
+];
+
+//Create first picker column	
+var firstColumn = Ti.UI.createPickerColumn({
+	width: "160dp"
 });
+
+for (var x = 0; x < distance1.length; x++){
+	firstColumn.addRow(Ti.UI.createPickerRow({
+		title:distance1[x].title, val:distance1[x].val
+	}));
+}
+
+//Create second picker column
+var secondColumn = Ti.UI.createPickerColumn({
+	width: "160dp"
+});	
+
+for (var x = 0; x < distance1.length; x++){
+	secondColumn.addRow(Ti.UI.createPickerRow({
+		title:distance2[x].title, val:distance2[x].val
+	}));
+}
+
+//Create picker and set format
+var picker = Ti.UI.createPicker({
+	selectionIndicator: true,
+	userSpinner: true,
+	type: Ti.UI.PICKER_TYPE_PLAIN,
+	top: 110,
+	height: 200,
+	columns: [firstColumn, secondColumn]
+});
+
+picker.addEventListener("change", function(e){
+	
+});
+
+//Add picker to window
+win2.add(picker);
+
+//Create button that will convert the value entered into the text field by following the
+//conversion selected in the picker tables and then display final result in same field
+var convertButton = Titanium.UI.createButton({
+  color:'#FFFFFF',
+  backgroundColor: '#F27935',
+  borderColor: '#000000',
+  font: { fontSize:30, fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+  title: 'CONVERT',
+  textAlign: 'center',
+  top: 310,
+  height: 40,
+  width: 320
+});
+
+//Add convert button to window
+win2.add(convertButton);
+
+win2.open();
+
+//Set starting selections for picker
+picker.setSelectedRow(0, 3, false); 
+picker.setSelectedRow(1, 4, false); 
 
 // Tab 3 that displays following
 	var tab3 = Ti.UI.createTab({
@@ -711,27 +810,50 @@ cookingButton.addEventListener('click', function(e) {
 		window: win3
 	});
 
-var bigTextbox = Titanium.UI.createTextArea({
+//Create label to alert user that a text area is below
+var label1 = Ti.UI.createLabel({
+  color: '#900',
+  font: { fontSize:15 },
+  text: 'Tap below to add notes',
+  textAlign: 'left',
+  top: 30,
+  height: 20,
+  width: Ti.UI.SIZE, height: Ti.UI.SIZE
+});
+
+//Create cancel button that can be added to keyboard toolbar
+var cancel = Ti.UI.createButton({
+    systemButton : Ti.UI.iPhone.SystemButton.CANCEL
+});
+
+//Create text area that allows use of keyboard with toolbar
+var text = Titanium.UI.createTextArea({
 color: '#000000',
 backgroundColor: '#FFFFFF',
 verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,
 returnKeyType: Ti.UI.RETURNKEY_RETURN,
+keyboardToolbar : [cancel],
 scrollable: true,
-top: "30dp",
+top: "50dp",
 left: "5dp",
 width: "310dp",
-height: "490dp",
+height: "470dp",
 enabled: true, // enables OS keyboard to launch
 textAlign: 'left',
 font:{fontSize:"20dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
-placeholder: 'Tap to add notes', // Display on initial launches
 enableReturnKey: true,
 suppressReturn : false,
-hintText: 'Tap to add notes'
 });
 
+//Blur keyboard upon click
+win3.addEventListener("click", function(e){
+	text.blur();
+});
 
-win3.add(bigTextbox);
+//Add components to window
+win3.add(cancel);
+win3.add(label1);
+win3.add(text);
 
 
 	self.addTab(tab1);
