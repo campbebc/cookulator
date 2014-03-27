@@ -1,7 +1,8 @@
 /* Author: Benjamin Campbell
 * 
 * Description: This is a calculator app that has
-* the most basic operations: addition, subtraction,
+* the most basic
+* operations: addition, subtraction,
 * multiplication and division. 
 * 
 * Devices: iPhone and Android (only)
@@ -88,10 +89,22 @@ color:'#000000',
 backgroundColor: '#BDC3C7',
 borderColor: '#000000',
 top: "120dp",
-left: "0dp",
-width: "240dp",
+left: "80dp",
+width: "160dp",
 height: "80dp",
 font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+});
+
+var sendButton = Titanium.UI.createButton({
+title: 'SEND',
+color:'#000000',
+backgroundColor: '#BDC3C7',
+borderColor: '#000000',
+top: "120dp",
+left: "0dp",
+width: "80dp",
+height: "80dp",
+font:{fontSize:"20dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Seven Button enables the user to produce a 
@@ -273,7 +286,6 @@ height: "80dp",
 font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
-
 /* The Plus button enables the user to indicate that 
   addition is the next operation to execute. */
 var plusButton = Titanium.UI.createButton({
@@ -450,6 +462,12 @@ buttonFunction('.');
 }
 });
 
+//Send textbox value to the notes tab
+sendButton.addEventListener('click', function(e) {
+	Titanium.API.info ('in event listener ' + e);
+    notesText.value = notesText.value + '\n' + textbox.value; 
+});
+
 minusButton.addEventListener('click', function(e) {
 /* This is the listener to the Minus Button */
 
@@ -620,6 +638,7 @@ win1.add(decimalPointButton);
 win1.add(minusButton);
 win1.add(plusButton);
 win1.add(equalsButton);
+win1.add(sendButton);
 win1.add(divideButton);
 win1.add(multiplyButton);
 
@@ -638,7 +657,7 @@ backgroundColor: '#FFFFFF',
 borderColor: '#000000',
 top: "20dp",
 left: "0dp",
-width: "80dp",
+width: "106dp",
 height: "40dp",
 font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
@@ -650,24 +669,11 @@ color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
 top: "20dp",
-left: "80dp",
-width: "80dp",
+left: "107dp",
+width: "106dp",
 height: "40dp",
 font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
-
-//Volume button opens volume measurement tables
-var volumeButton = Titanium.UI.createButton({
-title: 'Volume',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "20dp",
-left: "160dp",
-width: "80dp",
-height: "40dp",
-font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});	
 
 //Cooking Button opens common cooking measurement tables	
 var cookingButton = Titanium.UI.createButton({
@@ -676,8 +682,8 @@ color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
 top: "20dp",
-left: "240dp",
-width: "80dp",
+left: "214dp",
+width: "106dp",
 height: "40dp",
 font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });		
@@ -685,7 +691,6 @@ font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 //Add all buttons to second tab
 win2.add(distanceButton);
 win2.add(weightButton);
-win2.add(volumeButton);
 win2.add(cookingButton);
 
 //Text field for user to enter initial value to be converted
@@ -695,15 +700,28 @@ backgroundColor: '#FFFFFF',
 keyboardType: Ti.UI.KEYBOARD_DECIMAL_PAD,
 top: "70dp",
 left: "5dp",
-width: "310dp",
+width: "155dp",
 height: "40dp",
 enabled: true, // enables OS keyboard to launch
 textAlign: 'left',
-font:{fontSize:"30dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
-placeholder: 'Enter initial value', // Display on initial launches
+font:{fontSize:"20dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+placeholder: 'Enter value', // Display on initial launches
 enableReturnKey: true,
 suppressReturn : false,
-hintText: 'Enter initial value'
+hintText: 'Enter value'
+});
+
+var answerBox = Titanium.UI.createTextField({
+color: '#000000',
+backgroundColor: '#FFFFFF',
+top: "70dp",
+left: "160dp",
+width: "155dp",
+height: "40dp",
+enabled: false, // disables OS keyboard to launch
+textAlign: 'left',
+font:{fontSize:"30dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+hintText: '='
 });
 
 //Set a maximum of 10 characters for text field entry
@@ -718,6 +736,7 @@ win2.addEventListener("click", function(e){
 
 //Add text field to window
 win2.add(entry);
+win2.add(answerBox);
 
 //First distance table entry
 var distance1 = [
@@ -739,6 +758,56 @@ var distance2 = [
 	{title: "Feet (ft)", val:"feet"},
 	{title: "Yard (yd)", val:"yard"},
 	{title: "Mile (mi)", val:"mile"}
+];
+
+//First weight table entry
+var weight1 = [
+	{title: "Carat (ct)", val:"carat"},	
+	{title: "Gram (g)", val:"gram"},
+	{title: "Kilogram (kg)", val:"kilogram"},
+	{title: "Short Ton (US t)", val:"shortTon"},
+	{title: "Long Ton (UK t)", val:"longTon"},
+	{title: "Ounce (oz)", val:"ounce"},
+	{title: "Pound (lb)", val:"pound"},
+	{title: "Metric Ton (t)", val:"metricTon"}
+];
+
+//Second weight table entry
+var weight2 = [
+	{title: "Carat (ct)", val:"carat"},	
+	{title: "Gram (g)", val:"gram"},
+	{title: "Kilogram (kg)", val:"kilogram"},
+	{title: "Short Ton (US t)", val:"shortTon"},
+	{title: "Long Ton (UK t)", val:"longTon"},
+	{title: "Ounce (oz)", val:"ounce"},
+	{title: "Pound (lb)", val:"pound"},
+	{title: "Metric Ton (t)", val:"metricTon"}
+];
+
+//First cooking table entry
+var cooking1 = [
+	{title: "Milliliter (ml)", val:"millileter"},	
+	{title: "Liter (l)", val:"liter"},
+	{title: "Fluid Ounce (fl oz)", val:"fluidOunce"},
+	{title: "Cup (c)", val:"cup"},
+	{title: "Pint (pt)", val:"pint"},
+	{title: "Quart (qt)", val:"quart"},
+	{title: "Gallon (gal)", val:"gallon"},
+	{title: "Teaspoon (tsp)", val:"teaspoon"},
+	{title: "Tablespoon (tbsp)", val:"tablespoon"}
+];
+
+//Second cooking table entry
+var cooking2 = [
+	{title: "Milliliter (ml)", val:"millileter"},	
+	{title: "Liter (l)", val:"liter"},
+	{title: "Fluid Ounce (fl oz)", val:"fluidOunce"},
+	{title: "Cup (c)", val:"cup"},
+	{title: "Pint (pt)", val:"pint"},
+	{title: "Quart (qt)", val:"quart"},
+	{title: "Gallon (gal)", val:"gallon"},
+	{title: "Teaspoon (tsp)", val:"teaspoon"},
+	{title: "Tablespoon (tbsp)", val:"tablespoon"}
 ];
 
 //Create first picker column	
@@ -794,8 +863,26 @@ var convertButton = Titanium.UI.createButton({
   width: 320
 });
 
+var sendButtonTwo = Titanium.UI.createButton({
+  color:'#FFFFFF',
+  backgroundColor: '#F27935',
+  borderColor: '#000000',
+  font: { fontSize:30, fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+  title: 'SEND TO NOTES',
+  textAlign: 'center',
+  top: 350,
+  height: 40,
+  width: 320
+});
+
 //Add convert button to window
 win2.add(convertButton);
+win2.add(sendButtonTwo);
+
+sendButtonTwo.addEventListener('click', function(e) {
+	Titanium.API.info ('in event listener ' + e);
+    notesText.value = notesText.value + '\n' + answerBox.value; 
+});
 
 win2.open();
 
@@ -812,7 +899,7 @@ picker.setSelectedRow(1, 4, false);
 
 //Create label to alert user that a text area is below
 var label1 = Ti.UI.createLabel({
-  color: '#900',
+  color: '#F27935',
   font: { fontSize:15 },
   text: 'Tap below to add notes',
   textAlign: 'left',
@@ -827,13 +914,14 @@ var cancel = Ti.UI.createButton({
 });
 
 //Create text area that allows use of keyboard with toolbar
-var text = Titanium.UI.createTextArea({
+var notesText = Titanium.UI.createTextArea({
 color: '#000000',
 backgroundColor: '#FFFFFF',
 verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,
 returnKeyType: Ti.UI.RETURNKEY_RETURN,
 keyboardToolbar : [cancel],
 scrollable: true,
+showVerticalScrollIndicator: true,
 top: "50dp",
 left: "5dp",
 width: "310dp",
@@ -847,13 +935,13 @@ suppressReturn : false,
 
 //Blur keyboard upon click
 win3.addEventListener("click", function(e){
-	text.blur();
+	notesText.blur();
 });
 
 //Add components to window
 win3.add(cancel);
 win3.add(label1);
-win3.add(text);
+win3.add(notesText);
 
 
 	self.addTab(tab1);
