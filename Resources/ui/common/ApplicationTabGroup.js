@@ -643,12 +643,15 @@ win1.add(divideButton);
 win1.add(multiplyButton);
 
 // Tab 2 that displays following
-	var tab2 = Ti.UI.createTab({
+Titanium.UI.setBackgroundColor('#000');
+
+var tab2 = Ti.UI.createTab({
 		title: L('Conversion'),
 		icon: '/images/conversion.png',
-		window: win2
+		window: win2,
+		layout:'vertical'
 	});
-
+	
 //Distance button opens distance measurement tables
 var distanceButton = Titanium.UI.createButton({
 title: 'Distance',
@@ -660,6 +663,11 @@ left: "0dp",
 width: "106dp",
 height: "40dp",
 font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+});
+
+distanceButton.addEventListener('click', function() {
+    dataLoad(distance1,firstColumn);
+    dataLoad(distance2,secondColumn);
 });
 
 //Weight button opens weight measurement tables
@@ -675,6 +683,11 @@ height: "40dp",
 font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
+weightButton.addEventListener('click', function() {
+    dataLoad(weight1,firstColumn);
+    dataLoad(weight2,secondColumn); 
+});
+
 //Cooking Button opens common cooking measurement tables	
 var cookingButton = Titanium.UI.createButton({
 title: 'Cooking',
@@ -686,7 +699,12 @@ left: "214dp",
 width: "106dp",
 height: "40dp",
 font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});		
+});	
+
+cookingButton.addEventListener('click', function() {
+    dataLoad(cooking1,firstColumn);
+    dataLoad(cooking2,secondColumn); 
+});	
 
 //Add all buttons to second tab
 win2.add(distanceButton);
@@ -736,118 +754,143 @@ win2.addEventListener("click", function(e){
 
 //Add text field to window
 win2.add(entry);
-win2.add(answerBox);
-
-//First distance table entry
+win2.add(answerBox);	
+ 
 var distance1 = [
-	{title: "Millimeter (mm)", val:"millimeter"},
-	{title: "Centimeter (cm)", val:"centimeter"},
-	{title: "Meter (m)", val:"meter"},
-	{title: "Inch (in)", val:"inch"},
-	{title: "Feet (ft)", val:"feet"},
-	{title: "Yard (yd)", val:"yard"},
-	{title: "Mile (mi)", val:"mile"}
+    {title: "Millimeter (mm)", val:"millimeter"},
+    {title: "Centimeter (cm)", val:"centimeter"},
+    {title: "Meter (m)", val:"meter"},
+    {title: "Inch (in)", val:"inch"},
+    {title: "Feet (ft)", val:"feet"},
+    {title: "Yard (yd)", val:"yard"},
+    {title: "Mile (mi)", val:"mile"}
 ];
-
-//Second distance table entry
+ 
 var distance2 = [
-	{title: "Millimeter (mm)", val:"millimeter"},
-	{title: "Centimeter (cm)", val:"centimeter"},
-	{title: "Meter (m)", val:"meter"},
-	{title: "Inch (in)", val:"inch"},
-	{title: "Feet (ft)", val:"feet"},
-	{title: "Yard (yd)", val:"yard"},
-	{title: "Mile (mi)", val:"mile"}
-];
-
-//First weight table entry
+    {title: "Millimeter (mm)", val:"millimeter"},
+    {title: "Centimeter (cm)", val:"centimeter"},
+    {title: "Meter (m)", val:"meter"},
+    {title: "Inch (in)", val:"inch"},
+    {title: "Feet (ft)", val:"feet"},
+    {title: "Yard (yd)", val:"yard"},
+    {title: "Mile (mi)", val:"mile"}
+]; 
+ 
 var weight1 = [
-	{title: "Carat (ct)", val:"carat"},	
-	{title: "Gram (g)", val:"gram"},
-	{title: "Kilogram (kg)", val:"kilogram"},
-	{title: "Short Ton (US t)", val:"shortTon"},
-	{title: "Long Ton (UK t)", val:"longTon"},
-	{title: "Ounce (oz)", val:"ounce"},
-	{title: "Pound (lb)", val:"pound"},
-	{title: "Metric Ton (t)", val:"metricTon"}
+    {title: "Carat (ct)", val:"carat"}, 
+    {title: "Gram (g)", val:"gram"},
+    {title: "Kilogram (kg)", val:"kilogram"},
+    {title: "Short Ton (US t)", val:"shortTon"},
+    {title: "Long Ton (UK t)", val:"longTon"},
+    {title: "Ounce (oz)", val:"ounce"},
+    {title: "Pound (lb)", val:"pound"},
+    {title: "Metric Ton (t)", val:"metricTon"}
 ];
 
-//Second weight table entry
 var weight2 = [
-	{title: "Carat (ct)", val:"carat"},	
-	{title: "Gram (g)", val:"gram"},
-	{title: "Kilogram (kg)", val:"kilogram"},
-	{title: "Short Ton (US t)", val:"shortTon"},
-	{title: "Long Ton (UK t)", val:"longTon"},
-	{title: "Ounce (oz)", val:"ounce"},
-	{title: "Pound (lb)", val:"pound"},
-	{title: "Metric Ton (t)", val:"metricTon"}
+    {title: "Carat (ct)", val:"carat"}, 
+    {title: "Gram (g)", val:"gram"},
+    {title: "Kilogram (kg)", val:"kilogram"},
+    {title: "Short Ton (US t)", val:"shortTon"},
+    {title: "Long Ton (UK t)", val:"longTon"},
+    {title: "Ounce (oz)", val:"ounce"},
+    {title: "Pound (lb)", val:"pound"},
+    {title: "Metric Ton (t)", val:"metricTon"}
 ];
-
-//First cooking table entry
+ 
 var cooking1 = [
-	{title: "Milliliter (ml)", val:"millileter"},	
-	{title: "Liter (l)", val:"liter"},
-	{title: "Fluid Ounce (fl oz)", val:"fluidOunce"},
-	{title: "Cup (c)", val:"cup"},
-	{title: "Pint (pt)", val:"pint"},
-	{title: "Quart (qt)", val:"quart"},
-	{title: "Gallon (gal)", val:"gallon"},
-	{title: "Teaspoon (tsp)", val:"teaspoon"},
-	{title: "Tablespoon (tbsp)", val:"tablespoon"}
+    {title: "Milliliter (ml)", val:"millileter"},   
+    {title: "Liter (l)", val:"liter"},
+    {title: "Fluid Ounce (fl oz)", val:"fluidOunce"},
+    {title: "Cup (c)", val:"cup"},
+    {title: "Pint (pt)", val:"pint"},
+    {title: "Quart (qt)", val:"quart"},
+    {title: "Gallon (gal)", val:"gallon"},
+    {title: "Teaspoon (tsp)", val:"teaspoon"},
+    {title: "Tablespoon (tbsp)", val:"tablespoon"}
 ];
-
-//Second cooking table entry
+ 
 var cooking2 = [
-	{title: "Milliliter (ml)", val:"millileter"},	
-	{title: "Liter (l)", val:"liter"},
-	{title: "Fluid Ounce (fl oz)", val:"fluidOunce"},
-	{title: "Cup (c)", val:"cup"},
-	{title: "Pint (pt)", val:"pint"},
-	{title: "Quart (qt)", val:"quart"},
-	{title: "Gallon (gal)", val:"gallon"},
-	{title: "Teaspoon (tsp)", val:"teaspoon"},
-	{title: "Tablespoon (tbsp)", val:"tablespoon"}
-];
-
-//Create first picker column	
+    {title: "Milliliter (ml)", val:"millileter"},   
+    {title: "Liter (l)", val:"liter"},
+    {title: "Fluid Ounce (fl oz)", val:"fluidOunce"},
+    {title: "Cup (c)", val:"cup"},
+    {title: "Pint (pt)", val:"pint"},
+    {title: "Quart (qt)", val:"quart"},
+    {title: "Gallon (gal)", val:"gallon"},
+    {title: "Teaspoon (tsp)", val:"teaspoon"},
+    {title: "Tablespoon (tbsp)", val:"tablespoon"}
+]; 
+ 
 var firstColumn = Ti.UI.createPickerColumn({
-	width: "160dp"
+    width: "160dp"
 });
-
-for (var x = 0; x < distance1.length; x++){
-	firstColumn.addRow(Ti.UI.createPickerRow({
-		title:distance1[x].title, val:distance1[x].val
-	}));
+ 
+for (var x = 0; x < distance1.length; x++)
+{
+    firstColumn.addRow(Ti.UI.createPickerRow({
+        title:distance1[x].title, 
+        val:distance1[x].val
+    }));
 }
-
-//Create second picker column
+ 
 var secondColumn = Ti.UI.createPickerColumn({
-	width: "160dp"
-});	
-
-for (var x = 0; x < distance1.length; x++){
-	secondColumn.addRow(Ti.UI.createPickerRow({
-		title:distance2[x].title, val:distance2[x].val
-	}));
+    width: "160dp"
+}); 
+ 
+for (var x = 0; x < distance2.length; x++){
+    secondColumn.addRow(Ti.UI.createPickerRow({
+        title:distance2[x].title, 
+        val:distance2[x].val
+    }));
 }
-
-//Create picker and set format
+ 
 var picker = Ti.UI.createPicker({
-	selectionIndicator: true,
-	userSpinner: true,
-	type: Ti.UI.PICKER_TYPE_PLAIN,
-	top: 110,
-	height: 200,
-	columns: [firstColumn, secondColumn]
+  top:110,
+  useSpinner: true
 });
-
-picker.addEventListener("change", function(e){
-	
-});
-
-//Add picker to window
+picker.selectionIndicator = true;
+picker.add([firstColumn,secondColumn]);
+ 
 win2.add(picker);
+win2.open();
+
+//Set starting selections for picker
+picker.setSelectedRow(0, 3, false); 
+picker.setSelectedRow(1, 4, false); 
+ 
+function dataLoad(data,column)
+{
+    var dataLth=data.length;
+    var columnLth=column.rowCount;
+    Ti.API.info('Data : '+dataLth+'   column  : '+columnLth);
+    if(dataLth>columnLth)
+    {
+        for (var i=0; i <column.rowCount; i++) {
+          column.rows[i].title=data[i].title, 
+          column.rows[i].val=data[i].val
+        }
+        for (var x = columnLth; x < dataLth; x++)
+        {
+            column.addRow(Ti.UI.createPickerRow({
+                title:data[x].title, 
+                val:data[x].val
+            }));
+        }
+    }
+    else
+    {
+        for (var i=0; i <data.length; i++) {
+          column.rows[i].title=data[i].title, 
+          column.rows[i].val=data[i].val
+        }
+        for (var x = columnLth-1; x >= dataLth; x--)
+        {
+            column.removeRow(column.rows[x]);
+        }
+    }
+ 
+}
 
 //Create button that will convert the value entered into the text field by following the
 //conversion selected in the picker tables and then display final result in same field
@@ -883,12 +926,6 @@ sendButtonTwo.addEventListener('click', function(e) {
 	Titanium.API.info ('in event listener ' + e);
     notesText.value = notesText.value + '\n' + answerBox.value; 
 });
-
-win2.open();
-
-//Set starting selections for picker
-picker.setSelectedRow(0, 3, false); 
-picker.setSelectedRow(1, 4, false); 
 
 // Tab 3 that displays following
 	var tab3 = Ti.UI.createTab({
