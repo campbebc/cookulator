@@ -25,6 +25,8 @@
 function ApplicationTabGroup(Window) {
 	//create module instance
 	var self = Ti.UI.createTabGroup();
+	
+	self.navBarHidden = true;
 
 	//create app tabs
 	var win1 = new Window(L('Calculator')),
@@ -34,12 +36,18 @@ function ApplicationTabGroup(Window) {
 	var tab1 = Ti.UI.createTab({
 		title: L('Calculator'),
 		icon: '/images/calculator.png',
-		window: win1
+		window: win1,
+		navBarHidden: true
 	});
 
-/* The one and only window that displays all the buttons
-  and a textbox. */
-var win = Titanium.UI.createWindow;
+var view1 = Ti.UI.createView({
+    width:'100%',
+    height:'100%',
+    backgroundColor: '#FFFFFF',
+    navBarHidden: true
+});
+
+win1.add(view1);
 
 /*** Global variables. ***/
 /* Indicates that the user wants to type a whole new nuumber
@@ -69,14 +77,20 @@ var decimalPointConcatenated = false;
 var textbox = Titanium.UI.createTextField({
 color: '#FFFFFF',
 backgroundColor: '#000000',
-top: "20dp",
-left: "0dp",
-width: "320dp",
-height: "100dp",
+top: "6%",
+left: "0%",
+width: '100%',
+height: "19%",
 enabled: false, // disables OS keyboard to launch
 textAlign: 'right',
-font:{fontSize:"75dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+font:{fontSize:"60%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
 value: '0' // Display on initial launches
+});
+
+textbox.addEventListener('change', function(e){
+    if(e.value.length > 9) {
+        textbox.value = e.value.substr(0,9);
+    }
 });
 
 /*** The Buttons ***/
@@ -88,11 +102,11 @@ title: 'AC',
 color:'#000000',
 backgroundColor: '#BDC3C7',
 borderColor: '#000000',
-top: "120dp",
-left: "80dp",
-width: "160dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "25%",
+left: "25%",
+width: "50%",
+height: "15%",
+font:{fontSize:"50%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 var sendButton = Titanium.UI.createButton({
@@ -100,11 +114,11 @@ title: 'SEND',
 color:'#000000',
 backgroundColor: '#BDC3C7',
 borderColor: '#000000',
-top: "120dp",
-left: "0dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"20dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "25%",
+left: "0%",
+width: "25%",
+height: "15%",
+font:{fontSize:"25%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Seven Button enables the user to produce a 
@@ -115,11 +129,11 @@ title: '7',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "200dp",
-left: "0dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "40%",
+left: "0%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Eight Button enables the user to produce a 
@@ -130,11 +144,11 @@ title: '8',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "200dp",
-left: "80dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "40%",
+left: "25%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Nine Button enables the user to produce a 
@@ -145,11 +159,11 @@ title: '9',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "200dp",
-left: "160dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "40%",
+left: "50%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Four Button enables the user to produce a 
@@ -160,11 +174,11 @@ title: '4',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "280dp",
-left: "0dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "55%",
+left: "0%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Five Button enables the user to produce a 
@@ -175,11 +189,11 @@ title: '5',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "280dp",
-left: "80dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "55%",
+left: "25%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Six Button enables the user to produce a 
@@ -190,11 +204,11 @@ title: '6',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "280dp",
-left: "160dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "55%",
+left: "50%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The One Button enables the user to produce a 
@@ -205,11 +219,11 @@ title: '1',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "360dp",
-left: "0dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "70%",
+left: "0%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Two Button enables the user to produce a 
@@ -220,11 +234,11 @@ title: '2',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "360dp",
-left: "80dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "70%",
+left: "25%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Three Button enables the user to produce a 
@@ -235,11 +249,11 @@ title: '3',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "360dp",
-left: "160dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "70%",
+left: "50%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Zero Button enables the user to produce a 
@@ -250,11 +264,11 @@ title: '0',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "440dp",
-left: "0dp",
-width: "160dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "85%",
+left: "0%",
+width: "50%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Decimal Point Button enables the user to produce a 
@@ -265,11 +279,11 @@ title: '.',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "440dp",
-left: "160dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "85%",
+left: "50%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Minus button enables the user to indicate that
@@ -279,11 +293,11 @@ title: '-',
 color:'#FFFFFF',
 backgroundColor: '#F27935',
 borderColor: '#000000',
-top: "280dp",
-left: "240dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "55%",
+left: "75%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Plus button enables the user to indicate that 
@@ -293,11 +307,11 @@ title: '+',
 color:'#FFFFFF',
 backgroundColor: '#F27935',
 borderColor: '#000000',
-top: "360dp",
-left: "240dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "70%",
+left: "75%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Equals button enables the user to indicate the
@@ -308,11 +322,11 @@ title: '=',
 color:'#FFFFFF',
 backgroundColor: '#F27935',
 borderColor: '#000000',
-top: "440dp",
-left: "240dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "85%",
+left: "75%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Divide button enables the user to indicate that
@@ -322,11 +336,11 @@ title: '/',
 color:'#FFFFFF',
 backgroundColor: '#F27935',
 borderColor: '#000000',
-top: "120dp",
-left: "240dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "25%",
+left: "75%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /* The Multiply button enables the user to indicate that
@@ -336,11 +350,11 @@ title: 'x',
 color:'#FFFFFF',
 backgroundColor: '#F27935',
 borderColor: '#000000',
-top: "200dp",
-left: "240dp",
-width: "80dp",
-height: "80dp",
-font:{fontSize:"40dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "40%",
+left: "75%",
+width: "25%",
+height: "15%",
+font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 /*** Listeners ***/
@@ -622,25 +636,25 @@ decimalPointConcatenated = false;
 }
 
 //Add all buttons to first tab
-win1.add(textbox);
-win1.add(clearButton);
-win1.add(sevenButton);
-win1.add(eightButton);
-win1.add(nineButton);
-win1.add(fourButton);
-win1.add(fiveButton);
-win1.add(sixButton);
-win1.add(oneButton);
-win1.add(twoButton);
-win1.add(threeButton);
-win1.add(bigWideZeroButton);
-win1.add(decimalPointButton);
-win1.add(minusButton);
-win1.add(plusButton);
-win1.add(equalsButton);
-win1.add(sendButton);
-win1.add(divideButton);
-win1.add(multiplyButton);
+view1.add(textbox);
+view1.add(clearButton);
+view1.add(sevenButton);
+view1.add(eightButton);
+view1.add(nineButton);
+view1.add(fourButton);
+view1.add(fiveButton);
+view1.add(sixButton);
+view1.add(oneButton);
+view1.add(twoButton);
+view1.add(threeButton);
+view1.add(bigWideZeroButton);
+view1.add(decimalPointButton);
+view1.add(minusButton);
+view1.add(plusButton);
+view1.add(equalsButton);
+view1.add(sendButton);
+view1.add(divideButton);
+view1.add(multiplyButton);
 
 // Tab 2 that displays following
 Titanium.UI.setBackgroundColor('#000');
@@ -652,17 +666,25 @@ var tab2 = Ti.UI.createTab({
 		layout:'vertical'
 	});
 	
+var view2 = Ti.UI.createView({
+    width:'100%',
+    height:'100%',
+    backgroundColor: '#FFFFFF',
+});
+
+win2.add(view2);	
+	
 //Distance button opens distance measurement tables
 var distanceButton = Titanium.UI.createButton({
 title: 'Distance',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "20dp",
-left: "0dp",
-width: "106dp",
-height: "40dp",
-font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "6%",
+left: "0%",
+width: "33.33%",
+height: "7%",
+font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 distanceButton.addEventListener('click', function() {
@@ -676,11 +698,11 @@ title: 'Weight',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "20dp",
-left: "107dp",
-width: "106dp",
-height: "40dp",
-font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "6%",
+left: "33.33%",
+width: "33.33%",
+height: "7%",
+font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 weightButton.addEventListener('click', function() {
@@ -694,11 +716,11 @@ title: 'Cooking',
 color:'#000000',
 backgroundColor: '#FFFFFF',
 borderColor: '#000000',
-top: "20dp",
-left: "214dp",
-width: "106dp",
-height: "40dp",
-font:{fontSize:"15dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+top: "6%",
+left: "66.66%",
+width: "33.33%",
+height: "7%",
+font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });	
 
 cookingButton.addEventListener('click', function() {
@@ -707,22 +729,22 @@ cookingButton.addEventListener('click', function() {
 });	
 
 //Add all buttons to second tab
-win2.add(distanceButton);
-win2.add(weightButton);
-win2.add(cookingButton);
+view2.add(distanceButton);
+view2.add(weightButton);
+view2.add(cookingButton);
 
 //Text field for user to enter initial value to be converted
 var entry = Titanium.UI.createTextField({
 color: '#000000',
 backgroundColor: '#FFFFFF',
 keyboardType: Ti.UI.KEYBOARD_DECIMAL_PAD,
-top: "70dp",
-left: "5dp",
-width: "155dp",
-height: "40dp",
+top: "13%",
+left: "1%",
+width: "49%",
+height: "12%",
 enabled: true, // enables OS keyboard to launch
 textAlign: 'left',
-font:{fontSize:"30dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+font:{fontSize:"25%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
 placeholder: 'Enter value', // Display on initial launches
 enableReturnKey: true,
 suppressReturn : false,
@@ -732,13 +754,13 @@ hintText: 'Enter value'
 var answerBox = Titanium.UI.createTextField({
 color: '#000000',
 backgroundColor: '#FFFFFF',
-top: "70dp",
-left: "160dp",
-width: "155dp",
-height: "40dp",
+top: "13%",
+left: "50%",
+width: "49%",
+height: "12%",
 enabled: false, // disables OS keyboard to launch
 textAlign: 'left',
-font:{fontSize:"30dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+font:{fontSize:"30%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
 hintText: '='
 });
 
@@ -748,13 +770,13 @@ entry.addEventListener('change', function(e){
 });
 
 //Blur keyboard upon click
-win2.addEventListener("click", function(e){
+view2.addEventListener("click", function(e){
 	entry.blur();
 });
 
 //Add text field to window
-win2.add(entry);
-win2.add(answerBox);	
+view2.add(entry);
+view2.add(answerBox);	
  
 var distance1 = [
     {title: "Millimeter", val:"mm"},
@@ -792,7 +814,7 @@ var cooking1 = [
 ];
  
 var firstColumn = Ti.UI.createPickerColumn({
-    width: "160dp"
+    width: 160
 });
  
 for (var x = 0; x < cooking1.length; x++)
@@ -804,7 +826,7 @@ for (var x = 0; x < cooking1.length; x++)
 }
  
 var secondColumn = Ti.UI.createPickerColumn({
-    width: "160dp",
+    width: 160,
     textAlign: 'right'
 }); 
  
@@ -816,14 +838,13 @@ for (var x = 0; x < cooking1.length; x++){
 }
  
 var picker = Ti.UI.createPicker({
-  top:110,
+  top:"25%",
   useSpinner: true
 });
 picker.selectionIndicator = true;
 picker.add([firstColumn,secondColumn]);
  
-win2.add(picker);
-win2.open();
+view2.add(picker);
 
 //Set starting selections for picker
 picker.setSelectedRow(0, 3, false); 
@@ -868,24 +889,24 @@ var convertButton = Titanium.UI.createButton({
   color:'#FFFFFF',
   backgroundColor: '#F27935',
   borderColor: '#000000',
-  font: { fontSize:30, fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+  font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
   title: 'CONVERT',
   textAlign: 'center',
-  top: 310,
-  height: 40,
-  width: 320
+  top: "62%",
+  height: "10%",
+  width: "100%"
 });
 
 var sendButtonTwo = Titanium.UI.createButton({
   color:'#FFFFFF',
   backgroundColor: '#F27935',
   borderColor: '#000000',
-  font: { fontSize:30, fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+  font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
   title: 'SEND TO NOTES',
   textAlign: 'center',
-  top: 350,
-  height: 40,
-  width: 320
+  top: "72%",
+  height: "10%",
+  width: "100%"
 });
 
 Ti.App.oneColumn = 'Null';
@@ -1560,8 +1581,8 @@ convertButton.addEventListener('click', function(e){
 });
 
 //Add convert button to window
-win2.add(convertButton);
-win2.add(sendButtonTwo);
+view2.add(convertButton);
+view2.add(sendButtonTwo);
 
 sendButtonTwo.addEventListener('click', function(e) {
 	Titanium.API.info ('in event listener ' + e);
@@ -1574,16 +1595,25 @@ sendButtonTwo.addEventListener('click', function(e) {
 		icon: '/images/notes.png',		
 		window: win3
 	});
+	
+var view3 = Ti.UI.createView({
+    width:'100%',
+    height:'100%',
+    backgroundColor: '#FFFFFF',
+});
+
+win3.add(view3);	
 
 //Create label to alert user that a text area is below
 var label1 = Ti.UI.createLabel({
   color: '#F27935',
-  font: { fontSize:15 },
+  font: { fontSize:'10%' },
   text: 'Tap below to add notes',
   textAlign: 'left',
-  top: 30,
-  height: 20,
-  width: Ti.UI.SIZE, height: Ti.UI.SIZE
+  top: "6%",
+  height: "5%",
+  width: Ti.UI.SIZE, 
+  height: Ti.UI.SIZE
 });
 
 //Create cancel button that can be added to keyboard toolbar
@@ -1600,26 +1630,26 @@ returnKeyType: Ti.UI.RETURNKEY_RETURN,
 keyboardToolbar : [cancel],
 scrollable: true,
 showVerticalScrollIndicator: true,
-top: "50dp",
-left: "5dp",
-width: "310dp",
-height: "470dp",
+top: "11%",
+left: "1%",
+width: "98%",
+height: "80%",
 enabled: true, // enables OS keyboard to launch
 textAlign: 'left',
-font:{fontSize:"20dp",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+font:{fontSize:"20",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
 enableReturnKey: true,
 suppressReturn : false,
 });
 
 //Blur keyboard upon click
-win3.addEventListener("click", function(e){
+view3.addEventListener("click", function(e){
 	notesText.blur();
 });
 
 //Add components to window
-win3.add(cancel);
-win3.add(label1);
-win3.add(notesText);
+view3.add(cancel);
+view3.add(label1);
+view3.add(notesText);
 
 
 	self.addTab(tab1);

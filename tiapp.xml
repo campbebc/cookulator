@@ -9,7 +9,7 @@
     <copyright>2014 by benjamincampbell</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
-    <navbar-hidden>false</navbar-hidden>
+    <navbar-hidden>true</navbar-hidden>
     <analytics>true</analytics>
     <guid>3820dbdc-267d-4468-8a03-a98c1253d238</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
@@ -32,7 +32,7 @@
                 <key>UIPrerenderedIcon</key>
                 <false/>
                 <key>UIStatusBarHidden</key>
-                <false/>
+                <true/>
                 <key>UIStatusBarStyle</key>
                 <string>UIStatusBarStyleDefault</string>
             </dict>

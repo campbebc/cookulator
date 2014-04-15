@@ -11,17 +11,17 @@
  */
 
 //bootstrap and check dependencies
-if (Ti.version < 1.8) {
-  alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');
+if (Ti.version < 3.2) {
+  alert('Sorry - this application template requires Titanium Mobile SDK 3.2 or later');
 }
 
 // This is a single context application with mutliple windows in a stack
 (function() {
   //determine platform and form factor and render approproate components
   var osname = Ti.Platform.osname,
-    version = Ti.Platform.version,
-    height = Ti.Platform.displayCaps.platformHeight,
-    width = Ti.Platform.displayCaps.platformWidth;
+      version = Ti.Platform.version,
+      height = Ti.Platform.displayCaps.platformHeight,
+      width = Ti.Platform.displayCaps.platformWidth;
 
   function checkTablet() {
     var platform = Ti.Platform.osname;
