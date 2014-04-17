@@ -25,8 +25,6 @@
 function ApplicationTabGroup(Window) {
 	//create module instance
 	var self = Ti.UI.createTabGroup();
-	
-	self.navBarHidden = true;
 
 	//create app tabs
 	var win1 = new Window(L('Calculator')),
@@ -36,15 +34,13 @@ function ApplicationTabGroup(Window) {
 	var tab1 = Ti.UI.createTab({
 		title: L('Calculator'),
 		icon: '/images/calculator.png',
-		window: win1,
-		navBarHidden: true
+		window: win1
 	});
 
 var view1 = Ti.UI.createView({
     width:'100%',
     height:'100%',
     backgroundColor: '#FFFFFF',
-    navBarHidden: true
 });
 
 win1.add(view1);
@@ -66,6 +62,11 @@ var nextOperator = '';
   expression so this is initialized to false. */
 var decimalPointConcatenated = false;
 
+var isAndroid = false;
+if(Titanium.Platform.name == 'android'){
+    isAndroid = true;
+}
+
 /*** The one and only textfield ***/
 /* This textfield displays a response to the user's work.
   As all textfields, it takes in strings. So all numbers
@@ -74,290 +75,570 @@ var decimalPointConcatenated = false;
   to a float value and converted back to a string. This
   textbox also responds to all the buttons displayed and
   not to its corresponding OS' keyboard. */
-var textbox = Titanium.UI.createTextField({
-color: '#FFFFFF',
-backgroundColor: '#000000',
-top: "6%",
-left: "0%",
-width: '100%',
-height: "19%",
-enabled: false, // disables OS keyboard to launch
-textAlign: 'right',
-font:{fontSize:"60%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
-value: '0' // Display on initial launches
-});
-
-textbox.addEventListener('change', function(e){
-    if(e.value.length > 9) {
-        textbox.value = e.value.substr(0,9);
-    }
-});
-
-/*** The Buttons ***/
-/* The Clear button resets everything. This enables the user
-  to indicate that they will start a whole new calculation and
-  disregarding the previous calculation. */
-var clearButton = Titanium.UI.createButton({
-title: 'AC',
-color:'#000000',
-backgroundColor: '#BDC3C7',
-borderColor: '#000000',
-top: "25%",
-left: "25%",
-width: "50%",
-height: "15%",
-font:{fontSize:"50%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-var sendButton = Titanium.UI.createButton({
-title: 'SEND',
-color:'#000000',
-backgroundColor: '#BDC3C7',
-borderColor: '#000000',
-top: "25%",
-left: "0%",
-width: "25%",
-height: "15%",
-font:{fontSize:"25%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Seven Button enables the user to produce a 
-  character of '7' to be concatenated to the
-  current value of the textbox. */
-var sevenButton = Titanium.UI.createButton({
-title: '7',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "40%",
-left: "0%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Eight Button enables the user to produce a 
-  character of '8' to be concatenated to the
-  current value of the textbox. */
-var eightButton = Titanium.UI.createButton({
-title: '8',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "40%",
-left: "25%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Nine Button enables the user to produce a 
-  character of '9' to be concatenated to the
-  current value of the textbox. */
-var nineButton = Titanium.UI.createButton({
-title: '9',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "40%",
-left: "50%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Four Button enables the user to produce a 
-  character of '4' to be concatenated to the
-  current value of the textbox. */
-var fourButton = Titanium.UI.createButton({
-title: '4',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "55%",
-left: "0%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Five Button enables the user to produce a 
-  character of '5' to be concatenated to the
-  current value of the textbox. */
-var fiveButton = Titanium.UI.createButton({
-title: '5',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "55%",
-left: "25%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Six Button enables the user to produce a 
-  character of '6' to be concatenated to the
-  current value of the textbox. */
-var sixButton = Titanium.UI.createButton({
-title: '6',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "55%",
-left: "50%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The One Button enables the user to produce a 
-  character of '1' to be concatenated to the
-  current value of the textbox. */
-var oneButton = Titanium.UI.createButton({
-title: '1',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "70%",
-left: "0%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Two Button enables the user to produce a 
-  character of '2' to be concatenated to the
-  current value of the textbox. */
-var twoButton = Titanium.UI.createButton({
-title: '2',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "70%",
-left: "25%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Three Button enables the user to produce a 
-  character of '3' to be concatenated to the
-  current value of the textbox. */
-var threeButton = Titanium.UI.createButton({
-title: '3',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "70%",
-left: "50%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Zero Button enables the user to produce a 
-  character of '0' to be concatenated to the
-  current value of the textbox. */
-var bigWideZeroButton = Titanium.UI.createButton({
-title: '0',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "85%",
-left: "0%",
-width: "50%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Decimal Point Button enables the user to produce a 
-  character, '.' to be concatenated to the
-  current value of the textbox. */
-var decimalPointButton = Titanium.UI.createButton({
-title: '.',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "85%",
-left: "50%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Minus button enables the user to indicate that
-  subtraction is the next operation to execute. */
-var minusButton = Titanium.UI.createButton({
-title: '-',
-color:'#FFFFFF',
-backgroundColor: '#F27935',
-borderColor: '#000000',
-top: "55%",
-left: "75%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Plus button enables the user to indicate that 
-  addition is the next operation to execute. */
-var plusButton = Titanium.UI.createButton({
-title: '+',
-color:'#FFFFFF',
-backgroundColor: '#F27935',
-borderColor: '#000000',
-top: "70%",
-left: "75%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Equals button enables the user to indicate the
-  previously chosen operation should be executed and
-  display a result to the textbox. */
-var equalsButton = Titanium.UI.createButton({
-title: '=',
-color:'#FFFFFF',
-backgroundColor: '#F27935',
-borderColor: '#000000',
-top: "85%",
-left: "75%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Divide button enables the user to indicate that
-  division is the next operation to execute. */
-var divideButton = Titanium.UI.createButton({
-title: '/',
-color:'#FFFFFF',
-backgroundColor: '#F27935',
-borderColor: '#000000',
-top: "25%",
-left: "75%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
-
-/* The Multiply button enables the user to indicate that
-  multiplication is the next operation to execute. */
-var multiplyButton = Titanium.UI.createButton({
-title: 'x',
-color:'#FFFFFF',
-backgroundColor: '#F27935',
-borderColor: '#000000',
-top: "40%",
-left: "75%",
-width: "25%",
-height: "15%",
-font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
+ 
+if(isAndroid){
+	var textbox = Titanium.UI.createTextField({
+		color: '#FFFFFF',
+		backgroundColor: '#000000',
+		top: "0%",
+		left: "0%",
+		width: '100%',
+		height: "20%",
+		enabled: false, // disables OS keyboard to launch
+		textAlign: 'right',
+		font:{fontSize:"60%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+		value: '0' // Display on initial launches
+	});
+			
+	/*** The Buttons ***/
+	/* The Clear button resets everything. This enables the user
+	  to indicate that they will start a whole new calculation and
+	  disregarding the previous calculation. */
+	var clearButton = Titanium.UI.createButton({
+		title: 'AC',
+		color:'#000000',
+		backgroundColor: '#BDC3C7',
+		borderColor: '#000000',
+		top: "20%",
+		left: "25%",
+		width: "50%",
+		height: "16%",
+		font:{fontSize:"50%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	var sendButton = Titanium.UI.createButton({
+		title: 'SEND',
+		color:'#000000',
+		backgroundColor: '#BDC3C7',
+		borderColor: '#000000',
+		top: "20%",
+		left: "0%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"25%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Seven Button enables the user to produce a 
+	  character of '7' to be concatenated to the
+	  current value of the textbox. */
+	var sevenButton = Titanium.UI.createButton({
+		title: '7',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "36%",
+		left: "0%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Eight Button enables the user to produce a 
+	  character of '8' to be concatenated to the
+	  current value of the textbox. */
+	var eightButton = Titanium.UI.createButton({
+		title: '8',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "36%",
+		left: "25%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Nine Button enables the user to produce a 
+	  character of '9' to be concatenated to the
+	  current value of the textbox. */
+	var nineButton = Titanium.UI.createButton({
+		title: '9',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "36%",
+		left: "50%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Four Button enables the user to produce a 
+	  character of '4' to be concatenated to the
+	  current value of the textbox. */
+	var fourButton = Titanium.UI.createButton({
+		title: '4',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "52%",
+		left: "0%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Five Button enables the user to produce a 
+	  character of '5' to be concatenated to the
+	  current value of the textbox. */
+	var fiveButton = Titanium.UI.createButton({
+		title: '5',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "52%",
+		left: "25%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Six Button enables the user to produce a 
+	  character of '6' to be concatenated to the
+	  current value of the textbox. */
+	var sixButton = Titanium.UI.createButton({
+		title: '6',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "52%",
+		left: "50%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The One Button enables the user to produce a 
+	  character of '1' to be concatenated to the
+	  current value of the textbox. */
+	var oneButton = Titanium.UI.createButton({
+		title: '1',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "68%",
+		left: "0%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Two Button enables the user to produce a 
+	  character of '2' to be concatenated to the
+	  current value of the textbox. */
+	var twoButton = Titanium.UI.createButton({
+		title: '2',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "68%",
+		left: "25%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Three Button enables the user to produce a 
+	  character of '3' to be concatenated to the
+	  current value of the textbox. */
+	var threeButton = Titanium.UI.createButton({
+		title: '3',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "68%",
+		left: "50%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Zero Button enables the user to produce a 
+	  character of '0' to be concatenated to the
+	  current value of the textbox. */
+	var bigWideZeroButton = Titanium.UI.createButton({
+		title: '0',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "84%",
+		left: "0%",
+		width: "50%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Decimal Point Button enables the user to produce a 
+	  character, '.' to be concatenated to the
+	  current value of the textbox. */
+	var decimalPointButton = Titanium.UI.createButton({
+		title: '.',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "84%",
+		left: "50%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Minus button enables the user to indicate that
+	  subtraction is the next operation to execute. */
+	var minusButton = Titanium.UI.createButton({
+		title: '-',
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		top: "52%",
+		left: "75%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Plus button enables the user to indicate that 
+	  addition is the next operation to execute. */
+	var plusButton = Titanium.UI.createButton({
+		title: '+',
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		top: "68%",
+		left: "75%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Equals button enables the user to indicate the
+	  previously chosen operation should be executed and
+	  display a result to the textbox. */
+	var equalsButton = Titanium.UI.createButton({
+		title: '=',
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		top: "84%",
+		left: "75%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Divide button enables the user to indicate that
+	  division is the next operation to execute. */
+	var divideButton = Titanium.UI.createButton({
+		title: '/',
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		top: "20%",
+		left: "75%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Multiply button enables the user to indicate that
+	  multiplication is the next operation to execute. */
+	var multiplyButton = Titanium.UI.createButton({
+		title: 'x',
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		top: "36%",
+		left: "75%",
+		width: "25%",
+		height: "16%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+}
+else{	 
+	var textbox = Titanium.UI.createTextField({
+		color: '#FFFFFF',
+		backgroundColor: '#000000',
+		top: "6%",
+		left: "0%",
+		width: '100%',
+		height: "19%",
+		enabled: false, // disables OS keyboard to launch
+		textAlign: 'right',
+		font:{fontSize:"60%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+		value: '0' // Display on initial launches
+	});
+	
+	/*** The Buttons ***/
+	/* The Clear button resets everything. This enables the user
+	  to indicate that they will start a whole new calculation and
+	  disregarding the previous calculation. */
+	var clearButton = Titanium.UI.createButton({
+		title: 'AC',
+		color:'#000000',
+		backgroundColor: '#BDC3C7',
+		borderColor: '#000000',
+		top: "25%",
+		left: "25%",
+		width: "50%",
+		height: "15%",
+		font:{fontSize:"50%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	var sendButton = Titanium.UI.createButton({
+		title: 'SEND',
+		color:'#000000',
+		backgroundColor: '#BDC3C7',
+		borderColor: '#000000',
+		top: "25%",
+		left: "0%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"25%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Seven Button enables the user to produce a 
+	  character of '7' to be concatenated to the
+	  current value of the textbox. */
+	var sevenButton = Titanium.UI.createButton({
+		title: '7',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "40%",
+		left: "0%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Eight Button enables the user to produce a 
+	  character of '8' to be concatenated to the
+	  current value of the textbox. */
+	var eightButton = Titanium.UI.createButton({
+		title: '8',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "40%",
+		left: "25%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Nine Button enables the user to produce a 
+	  character of '9' to be concatenated to the
+	  current value of the textbox. */
+	var nineButton = Titanium.UI.createButton({
+		title: '9',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "40%",
+		left: "50%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Four Button enables the user to produce a 
+	  character of '4' to be concatenated to the
+	  current value of the textbox. */
+	var fourButton = Titanium.UI.createButton({
+		title: '4',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "55%",
+		left: "0%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Five Button enables the user to produce a 
+	  character of '5' to be concatenated to the
+	  current value of the textbox. */
+	var fiveButton = Titanium.UI.createButton({
+		title: '5',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "55%",
+		left: "25%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Six Button enables the user to produce a 
+	  character of '6' to be concatenated to the
+	  current value of the textbox. */
+	var sixButton = Titanium.UI.createButton({
+		title: '6',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "55%",
+		left: "50%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The One Button enables the user to produce a 
+	  character of '1' to be concatenated to the
+	  current value of the textbox. */
+	var oneButton = Titanium.UI.createButton({
+		title: '1',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "70%",
+		left: "0%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Two Button enables the user to produce a 
+	  character of '2' to be concatenated to the
+	  current value of the textbox. */
+	var twoButton = Titanium.UI.createButton({
+		title: '2',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "70%",
+		left: "25%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Three Button enables the user to produce a 
+	  character of '3' to be concatenated to the
+	  current value of the textbox. */
+	var threeButton = Titanium.UI.createButton({
+		title: '3',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "70%",
+		left: "50%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Zero Button enables the user to produce a 
+	  character of '0' to be concatenated to the
+	  current value of the textbox. */
+	var bigWideZeroButton = Titanium.UI.createButton({
+		title: '0',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "85%",
+		left: "0%",
+		width: "50%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Decimal Point Button enables the user to produce a 
+	  character, '.' to be concatenated to the
+	  current value of the textbox. */
+	var decimalPointButton = Titanium.UI.createButton({
+		title: '.',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "85%",
+		left: "50%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Minus button enables the user to indicate that
+	  subtraction is the next operation to execute. */
+	var minusButton = Titanium.UI.createButton({
+		title: '-',
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		top: "55%",
+		left: "75%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Plus button enables the user to indicate that 
+	  addition is the next operation to execute. */
+	var plusButton = Titanium.UI.createButton({
+		title: '+',
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		top: "70%",
+		left: "75%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Equals button enables the user to indicate the
+	  previously chosen operation should be executed and
+	  display a result to the textbox. */
+	var equalsButton = Titanium.UI.createButton({
+		title: '=',
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		top: "85%",
+		left: "75%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Divide button enables the user to indicate that
+	  division is the next operation to execute. */
+	var divideButton = Titanium.UI.createButton({
+		title: '/',
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		top: "25%",
+		left: "75%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	/* The Multiply button enables the user to indicate that
+	  multiplication is the next operation to execute. */
+	var multiplyButton = Titanium.UI.createButton({
+		title: 'x',
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		top: "40%",
+		left: "75%",
+		width: "25%",
+		height: "15%",
+		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+}
 
 /*** Listeners ***/
+textbox.addEventListener('change', function(e){
+	    if(e.value.length > 9) {
+	        textbox.value = e.value.substr(0,9);
+	    }
+	});
 
 clearButton.addEventListener('click', function(e) {
 /* This is the listener for the Clear Button. */
@@ -673,36 +954,220 @@ var view2 = Ti.UI.createView({
 });
 
 win2.add(view2);	
+
+//If device detected is an Android device then ....
+if(isAndroid){
+	//Distance button opens distance measurement tables
+	var distanceButton = Titanium.UI.createButton({
+		title: 'Distance',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "2%",
+		left: "0%",
+		width: "33.33%",
+		height: "7%",
+		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
 	
-//Distance button opens distance measurement tables
-var distanceButton = Titanium.UI.createButton({
-title: 'Distance',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "6%",
-left: "0%",
-width: "33.33%",
-height: "7%",
-font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});
+	//Weight button opens weight measurement tables
+	var weightButton = Titanium.UI.createButton({
+		title: 'Weight',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "2%",
+		left: "33.33%",
+		width: "33.33%",
+		height: "7%",
+		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	//Cooking Button opens common cooking measurement tables	
+	var cookingButton = Titanium.UI.createButton({
+		title: 'Cooking',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "2%",
+		left: "66.66%",
+		width: "33.33%",
+		height: "7%",
+		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});	
+	
+	//Text field for user to enter initial value to be converted
+	var entry = Titanium.UI.createTextField({
+		color: '#000000',
+		backgroundColor: '#FFFFFF',
+		keyboardType: Ti.UI.KEYBOARD_DECIMAL_PAD,
+		top: "9%",
+		left: "1%",
+		width: "49%",
+		height: "12%",
+		enabled: true, // enables OS keyboard to launch
+		textAlign: 'left',
+		font:{fontSize:"20%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+		placeholder: 'Enter value', // Display on initial launches
+		enableReturnKey: true,
+		suppressReturn : false,
+		hintText: 'Enter value'
+	});
+
+	var answerBox = Titanium.UI.createTextField({
+		color: '#000000',
+		backgroundColor: '#FFFFFF',
+		top: "9%",
+		left: "50%",
+		width: "49%",
+		height: "12%",
+		enabled: false, // disables OS keyboard to launch
+		textAlign: 'left',
+		font:{fontSize:"30%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+		hintText: '='
+	});
+	
+	var picker = Ti.UI.createPicker({
+		top:"21%",
+		useSpinner: true
+	});
+	
+	//Convert button will take initial value entered into "entry" and the selections from
+	//the picker. Answer will be displayed in "answerBox".
+	var convertButton = Titanium.UI.createButton({
+	  	color:'#FFFFFF',
+	  	backgroundColor: '#F27935',
+		borderColor: '#000000',
+		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+		title: 'CONVERT',
+		textAlign: 'center',
+		top: "57%",
+		height: "10%",
+		width: "100%"
+	});
+	
+	//Will send result in "answerBox" to the notes tab
+	var sendButtonTwo = Titanium.UI.createButton({
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+		title: 'SEND TO NOTES',
+		textAlign: 'center',
+		top: "67%",
+		height: "10%",
+		width: "100%"
+	});
+}
+//If iphone or other device then....
+else{
+	//Distance button opens distance measurement tables
+	var distanceButton = Titanium.UI.createButton({
+		title: 'Distance',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "6%",
+		left: "0%",
+		width: "33.33%",
+		height: "7%",
+		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	//Weight button opens weight measurement tables
+	var weightButton = Titanium.UI.createButton({
+		title: 'Weight',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "6%",
+		left: "33.33%",
+		width: "33.33%",
+		height: "7%",
+		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});
+	
+	//Cooking Button opens common cooking measurement tables	
+	var cookingButton = Titanium.UI.createButton({
+		title: 'Cooking',
+		color:'#000000',
+		backgroundColor: '#FFFFFF',
+		borderColor: '#000000',
+		top: "6%",
+		left: "66.66%",
+		width: "33.33%",
+		height: "7%",
+		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+	});	
+	
+	//Text field for user to enter initial value to be converted
+	var entry = Titanium.UI.createTextField({
+		color: '#000000',
+		backgroundColor: '#FFFFFF',
+		keyboardType: Ti.UI.KEYBOARD_DECIMAL_PAD,
+		top: "13%",
+		left: "1%",
+		width: "49%",
+		height: "12%",
+		enabled: true, // enables OS keyboard to launch
+		textAlign: 'left',
+		font:{fontSize:"25%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+		placeholder: 'Enter value', // Display on initial launches
+		enableReturnKey: true,
+		suppressReturn : false,
+		hintText: 'Enter value'
+	});
+
+	var answerBox = Titanium.UI.createTextField({
+		color: '#000000',
+		backgroundColor: '#FFFFFF',
+		top: "13%",
+		left: "50%",
+		width: "49%",
+		height: "12%",
+		enabled: false, // disables OS keyboard to launch
+		textAlign: 'left',
+		font:{fontSize:"30%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+		hintText: '='
+	});
+	
+	var picker = Ti.UI.createPicker({
+		top:"25%",
+		useSpinner: true
+	});
+	
+	//Convert button will take initial value entered into "entry" and the selections from
+	//the picker. Answer will be displayed in "answerBox".
+	var convertButton = Titanium.UI.createButton({
+	  	color:'#FFFFFF',
+	  	backgroundColor: '#F27935',
+		borderColor: '#000000',
+		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+		title: 'CONVERT',
+		textAlign: 'center',
+		top: "62%",
+		height: "10%",
+		width: "100%"
+	});
+	
+	//Will send result in "answerBox" to the notes tab
+	var sendButtonTwo = Titanium.UI.createButton({
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+		title: 'SEND TO NOTES',
+		textAlign: 'center',
+		top: "72%",
+		height: "10%",
+		width: "100%"
+	});
+}
+	
 
 distanceButton.addEventListener('click', function() {
     dataLoad(distance1,firstColumn);
     dataLoad(distance1,secondColumn);
-});
-
-//Weight button opens weight measurement tables
-var weightButton = Titanium.UI.createButton({
-title: 'Weight',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "6%",
-left: "33.33%",
-width: "33.33%",
-height: "7%",
-font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 });
 
 weightButton.addEventListener('click', function() {
@@ -710,74 +1175,28 @@ weightButton.addEventListener('click', function() {
     dataLoad(weight1,secondColumn); 
 });
 
-//Cooking Button opens common cooking measurement tables	
-var cookingButton = Titanium.UI.createButton({
-title: 'Cooking',
-color:'#000000',
-backgroundColor: '#FFFFFF',
-borderColor: '#000000',
-top: "6%",
-left: "66.66%",
-width: "33.33%",
-height: "7%",
-font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
-});	
-
 cookingButton.addEventListener('click', function() {
     dataLoad(cooking1,firstColumn);
     dataLoad(cooking1,secondColumn); 
 });	
 
-//Add all buttons to second tab
+//Add all buttons and fields to second tab
 view2.add(distanceButton);
 view2.add(weightButton);
 view2.add(cookingButton);
+view2.add(entry);
+view2.add(answerBox);
 
-//Text field for user to enter initial value to be converted
-var entry = Titanium.UI.createTextField({
-color: '#000000',
-backgroundColor: '#FFFFFF',
-keyboardType: Ti.UI.KEYBOARD_DECIMAL_PAD,
-top: "13%",
-left: "1%",
-width: "49%",
-height: "12%",
-enabled: true, // enables OS keyboard to launch
-textAlign: 'left',
-font:{fontSize:"25%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
-placeholder: 'Enter value', // Display on initial launches
-enableReturnKey: true,
-suppressReturn : false,
-hintText: 'Enter value'
-});
-
-var answerBox = Titanium.UI.createTextField({
-color: '#000000',
-backgroundColor: '#FFFFFF',
-top: "13%",
-left: "50%",
-width: "49%",
-height: "12%",
-enabled: false, // disables OS keyboard to launch
-textAlign: 'left',
-font:{fontSize:"30%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
-hintText: '='
-});
-
-//Set a maximum of 10 characters for text field entry
+//Set a maximum of 9 characters for text field entry
 entry.addEventListener('change', function(e){
-    e.source.value = e.source.value.slice(0,10);
+    e.source.value = e.source.value.slice(0,9);
 });
 
 //Blur keyboard upon click
 view2.addEventListener("click", function(e){
 	entry.blur();
 });
-
-//Add text field to window
-view2.add(entry);
-view2.add(answerBox);	
- 
+	 
 var distance1 = [
     {title: "Millimeter", val:"mm"},
     {title: "Centimeter", val:"cm"},
@@ -837,10 +1256,6 @@ for (var x = 0; x < cooking1.length; x++){
     }));
 }
  
-var picker = Ti.UI.createPicker({
-  top:"25%",
-  useSpinner: true
-});
 picker.selectionIndicator = true;
 picker.add([firstColumn,secondColumn]);
  
@@ -882,32 +1297,6 @@ function dataLoad(data,column)
     }
  
 }
-
-//Create button that will convert the value entered into the text field by following the
-//conversion selected in the picker tables and then display final result in same field
-var convertButton = Titanium.UI.createButton({
-  color:'#FFFFFF',
-  backgroundColor: '#F27935',
-  borderColor: '#000000',
-  font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
-  title: 'CONVERT',
-  textAlign: 'center',
-  top: "62%",
-  height: "10%",
-  width: "100%"
-});
-
-var sendButtonTwo = Titanium.UI.createButton({
-  color:'#FFFFFF',
-  backgroundColor: '#F27935',
-  borderColor: '#000000',
-  font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
-  title: 'SEND TO NOTES',
-  textAlign: 'center',
-  top: "72%",
-  height: "10%",
-  width: "100%"
-});
 
 Ti.App.oneColumn = 'Null';
 Ti.App.twoColumn = 'Null';
@@ -1604,42 +1993,85 @@ var view3 = Ti.UI.createView({
 
 win3.add(view3);	
 
-//Create label to alert user that a text area is below
-var label1 = Ti.UI.createLabel({
-  color: '#F27935',
-  font: { fontSize:'10%' },
-  text: 'Tap below to add notes',
-  textAlign: 'left',
-  top: "6%",
-  height: "5%",
-  width: Ti.UI.SIZE, 
-  height: Ti.UI.SIZE
-});
+//If device detected is an Android device then ....
+if(isAndroid){
+    //Create label to alert user that a text area is below
+	var label1 = Ti.UI.createLabel({
+		color: '#F27935',
+		font: { fontSize:'10%' },
+		text: 'Tap below to add notes',
+		textAlign: 'left',
+		top: "2%",
+		height: "7%",
+		width: Ti.UI.SIZE, 
+		height: Ti.UI.SIZE
+	});
 
-//Create cancel button that can be added to keyboard toolbar
-var cancel = Ti.UI.createButton({
-    systemButton : Ti.UI.iPhone.SystemButton.CANCEL
-});
+	//Create cancel button that can be added to keyboard toolbar
+	var cancel = Ti.UI.createButton({
+    	systemButton : Ti.UI.iPhone.SystemButton.CANCEL
+	});
 
-//Create text area that allows use of keyboard with toolbar
-var notesText = Titanium.UI.createTextArea({
-color: '#000000',
-backgroundColor: '#FFFFFF',
-verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,
-returnKeyType: Ti.UI.RETURNKEY_RETURN,
-keyboardToolbar : [cancel],
-scrollable: true,
-showVerticalScrollIndicator: true,
-top: "11%",
-left: "1%",
-width: "98%",
-height: "80%",
-enabled: true, // enables OS keyboard to launch
-textAlign: 'left',
-font:{fontSize:"20",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
-enableReturnKey: true,
-suppressReturn : false,
-});
+	//Create text area that allows use of keyboard with toolbar
+	var notesText = Titanium.UI.createTextArea({
+		color: '#000000',
+		backgroundColor: '#FFFFFF',
+		verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,
+		returnKeyType: Ti.UI.RETURNKEY_RETURN,
+		keyboardToolbar : [cancel],
+		scrollable: true,
+		showVerticalScrollIndicator: true,
+		top: "9%",
+		left: "1%",
+		width: "98%",
+		height: "95%",
+		enabled: true, // enables OS keyboard to launch
+		focusable: true,
+		textAlign: 'left',
+		font:{fontSize:"20",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+		enableReturnKey: true,
+		suppressReturn : false,
+	});
+}
+//If iphone or other device then....
+else{
+    //Create label to alert user that a text area is below
+	var label1 = Ti.UI.createLabel({
+		color: '#F27935',
+		font: { fontSize:'15%' },
+		text: 'Tap below to add notes',
+		textAlign: 'left',
+		top: "6%",
+		height: "5%",
+		width: Ti.UI.SIZE, 
+		height: Ti.UI.SIZE
+	});
+
+	//Create cancel button that can be added to keyboard toolbar
+	var cancel = Ti.UI.createButton({
+    	systemButton : Ti.UI.iPhone.SystemButton.CANCEL
+	});
+
+	//Create text area that allows use of keyboard with toolbar
+	var notesText = Titanium.UI.createTextArea({
+		color: '#000000',
+		backgroundColor: '#FFFFFF',
+		verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,
+		returnKeyType: Ti.UI.RETURNKEY_RETURN,
+		keyboardToolbar : [cancel],
+		scrollable: true,
+		showVerticalScrollIndicator: true,
+		top: "11%",
+		left: "1%",
+		width: "98%",
+		height: "80%",
+		enabled: true, // enables OS keyboard to launch
+		textAlign: 'left',
+		font:{fontSize:"20",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+		enableReturnKey: true,
+		suppressReturn : false,
+	});
+}
 
 //Blur keyboard upon click
 view3.addEventListener("click", function(e){

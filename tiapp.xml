@@ -9,7 +9,7 @@
     <copyright>2014 by benjamincampbell</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
-    <navbar-hidden>true</navbar-hidden>
+    <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
     <guid>3820dbdc-267d-4468-8a03-a98c1253d238</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
@@ -32,7 +32,7 @@
                 <key>UIPrerenderedIcon</key>
                 <false/>
                 <key>UIStatusBarHidden</key>
-                <true/>
+                <false/>
                 <key>UIStatusBarStyle</key>
                 <string>UIStatusBarStyleDefault</string>
             </dict>
@@ -56,5 +56,5 @@
         <target device="mobileweb">true</target>
         <target device="tizen">false</target>
     </deployment-targets>
-    <sdk-version>3.2.1.GA</sdk-version>
+    <sdk-version>3.2.2.GA</sdk-version>
 </ti:app>
