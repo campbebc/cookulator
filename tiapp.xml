@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>com.ISAT480.Cookulator</id>
+    <id>com.jmu.cookulator</id>
     <name>Cookulator</name>
     <version>1.0</version>
     <publisher>benjamincampbell</publisher>
@@ -24,8 +24,6 @@
                 <array>
                     <string>UIInterfaceOrientationPortrait</string>
                     <string>UIInterfaceOrientationPortraitUpsideDown</string>
-                    <string>UIInterfaceOrientationLandscapeLeft</string>
-                    <string>UIInterfaceOrientationLandscapeRight</string>
                 </array>
                 <key>UIRequiresPersistentWiFi</key>
                 <false/>

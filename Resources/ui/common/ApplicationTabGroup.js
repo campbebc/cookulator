@@ -31,11 +31,22 @@ function ApplicationTabGroup(Window) {
 		win2 = new Window(L('Conversion'));
 		win3 = new Window(L('Notes'));
 
+if(isAndroid){	
+	var tab1 = Ti.UI.createTab({
+		title: L('Calculator'),
+		icon: '/images/androidcalculator.png',
+		window: win1,
+		layout:'vertical'
+	});
+}
+else{
 	var tab1 = Ti.UI.createTab({
 		title: L('Calculator'),
 		icon: '/images/calculator.png',
-		window: win1
+		window: win1,
+		layout: 'vertical'
 	});
+}	
 
 var view1 = Ti.UI.createView({
     width:'100%',
@@ -86,7 +97,7 @@ if(isAndroid){
 		height: "20%",
 		enabled: false, // disables OS keyboard to launch
 		textAlign: 'right',
-		font:{fontSize:"60%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'},
 		value: '0' // Display on initial launches
 	});
 			
@@ -103,7 +114,7 @@ if(isAndroid){
 		left: "25%",
 		width: "50%",
 		height: "16%",
-		font:{fontSize:"50%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	var sendButton = Titanium.UI.createButton({
@@ -115,7 +126,7 @@ if(isAndroid){
 		left: "0%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"25%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"20%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Seven Button enables the user to produce a 
@@ -130,7 +141,7 @@ if(isAndroid){
 		left: "0%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Eight Button enables the user to produce a 
@@ -145,7 +156,7 @@ if(isAndroid){
 		left: "25%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Nine Button enables the user to produce a 
@@ -160,7 +171,7 @@ if(isAndroid){
 		left: "50%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Four Button enables the user to produce a 
@@ -175,7 +186,7 @@ if(isAndroid){
 		left: "0%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Five Button enables the user to produce a 
@@ -190,7 +201,7 @@ if(isAndroid){
 		left: "25%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Six Button enables the user to produce a 
@@ -205,7 +216,7 @@ if(isAndroid){
 		left: "50%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The One Button enables the user to produce a 
@@ -220,7 +231,7 @@ if(isAndroid){
 		left: "0%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Two Button enables the user to produce a 
@@ -235,7 +246,7 @@ if(isAndroid){
 		left: "25%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Three Button enables the user to produce a 
@@ -250,7 +261,7 @@ if(isAndroid){
 		left: "50%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Zero Button enables the user to produce a 
@@ -265,7 +276,7 @@ if(isAndroid){
 		left: "0%",
 		width: "50%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Decimal Point Button enables the user to produce a 
@@ -280,7 +291,7 @@ if(isAndroid){
 		left: "50%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Minus button enables the user to indicate that
@@ -294,7 +305,7 @@ if(isAndroid){
 		left: "75%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Plus button enables the user to indicate that 
@@ -308,7 +319,7 @@ if(isAndroid){
 		left: "75%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Equals button enables the user to indicate the
@@ -323,7 +334,7 @@ if(isAndroid){
 		left: "75%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Divide button enables the user to indicate that
@@ -337,7 +348,7 @@ if(isAndroid){
 		left: "75%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	/* The Multiply button enables the user to indicate that
@@ -351,7 +362,7 @@ if(isAndroid){
 		left: "75%",
 		width: "25%",
 		height: "16%",
-		font:{fontSize:"55%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 }
 else{	 
@@ -937,15 +948,26 @@ view1.add(sendButton);
 view1.add(divideButton);
 view1.add(multiplyButton);
 
-// Tab 2 that displays following
+// Tab 2 that displays following 
 Titanium.UI.setBackgroundColor('#000');
 
-var tab2 = Ti.UI.createTab({
+if(isAndroid){
+	var tab2 = Ti.UI.createTab({
+		title: L('Conversion'),
+		icon: '/images/androidconversion.png',
+		window: win2,
+		layout:'vertical'
+	});
+}
+else{
+	var tab2 = Ti.UI.createTab({
 		title: L('Conversion'),
 		icon: '/images/conversion.png',
 		window: win2,
 		layout:'vertical'
 	});
+}
+	
 	
 var view2 = Ti.UI.createView({
     width:'100%',
@@ -963,11 +985,12 @@ if(isAndroid){
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
+		borderWidth: ".5%",
 		top: "2%",
 		left: "0%",
 		width: "33.33%",
 		height: "7%",
-		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:'18%',fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	//Weight button opens weight measurement tables
@@ -980,7 +1003,7 @@ if(isAndroid){
 		left: "33.33%",
 		width: "33.33%",
 		height: "7%",
-		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:'18%',fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 	
 	//Cooking Button opens common cooking measurement tables	
@@ -993,24 +1016,22 @@ if(isAndroid){
 		left: "66.66%",
 		width: "33.33%",
 		height: "7%",
-		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
+		font:{fontSize:'18%',fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});	
 	
 	//Text field for user to enter initial value to be converted
 	var entry = Titanium.UI.createTextField({
 		color: '#000000',
 		backgroundColor: '#FFFFFF',
-		keyboardType: Ti.UI.KEYBOARD_DECIMAL_PAD,
+		keyboardType: Titanium.UI.KEYBOARD_NUMBERS_PUNCTUATION,
+		returnKeyType: Titanium.UI.RETURNKEY_DONE,
+		softKeyboardOnFocus: Titanium.UI.Android.SOFT_KEYBOARD_SHOW_ON_FOCUS,
 		top: "9%",
 		left: "1%",
 		width: "49%",
 		height: "12%",
-		enabled: true, // enables OS keyboard to launch
 		textAlign: 'left',
-		font:{fontSize:"20%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
-		placeholder: 'Enter value', // Display on initial launches
-		enableReturnKey: true,
-		suppressReturn : false,
+		font:{fontSize:"20%",fontFamily:'Roboto-Light', fontWeight:'bold'},
 		hintText: 'Enter value'
 	});
 
@@ -1023,42 +1044,43 @@ if(isAndroid){
 		height: "12%",
 		enabled: false, // disables OS keyboard to launch
 		textAlign: 'left',
-		font:{fontSize:"30%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
-		hintText: '='
+		font:{fontSize:"20%",fontFamily:'Roboto-Light', fontWeight:'bold'},
+		hintText: ' ='
 	});
 	
 	var picker = Ti.UI.createPicker({
 		top:"21%",
 		useSpinner: true
 	});
-	
-	//Convert button will take initial value entered into "entry" and the selections from
-	//the picker. Answer will be displayed in "answerBox".
-	var convertButton = Titanium.UI.createButton({
-	  	color:'#FFFFFF',
-	  	backgroundColor: '#F27935',
-		borderColor: '#000000',
-		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
-		title: 'CONVERT',
-		textAlign: 'center',
-		top: "57%",
-		height: "10%",
-		width: "100%"
-	});
-	
+		
 	//Will send result in "answerBox" to the notes tab
 	var sendButtonTwo = Titanium.UI.createButton({
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
 		borderColor: '#000000',
-		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+		font: { fontSize:'30%', fontWeight:'bold', fontFamily:'Roboto-Light' },
 		title: 'SEND TO NOTES',
 		textAlign: 'center',
-		top: "67%",
+		top: "57%",
 		height: "10%",
-		width: "100%"
+		width: "50%"
+	});
+	
+	//Will send result in "answerBox" to the notes tab
+	var clearButton = Titanium.UI.createButton({
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		font: { fontSize:'30%', fontWeight:'bold', fontFamily:'Roboto-Light' },
+		title: 'SEND TO NOTES',
+		textAlign: 'center',
+		top: "57%",
+		left: "50%",
+		height: "10%",
+		width: "50%"
 	});
 }
+
 //If iphone or other device then....
 else{
 	//Distance button opens distance measurement tables
@@ -1067,6 +1089,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
+		borderWidth: 2,
 		top: "6%",
 		left: "0%",
 		width: "33.33%",
@@ -1080,6 +1103,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
+		borderWidth: 2,
 		top: "6%",
 		left: "33.33%",
 		width: "33.33%",
@@ -1093,6 +1117,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
+		borderWidth: 2,
 		top: "6%",
 		left: "66.66%",
 		width: "33.33%",
@@ -1100,84 +1125,128 @@ else{
 		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 	});	
 	
+	
+	var doneButton = Ti.UI.createButton({
+	    systemButton:Ti.UI.iPhone.SystemButton.DONE,
+	    right:0
+	});
+	 
+	view2.add(doneButton);
+ 
 	//Text field for user to enter initial value to be converted
 	var entry = Titanium.UI.createTextField({
+		borderStyle: Ti.UI.INPUT_BORDERSTYLE_LINE,
+		borderWidth: 1,
 		color: '#000000',
 		backgroundColor: '#FFFFFF',
 		keyboardType: Ti.UI.KEYBOARD_DECIMAL_PAD,
+		keyboardToolbar: [doneButton],
 		top: "13%",
-		left: "1%",
-		width: "49%",
+		left: "0%",
+		width: "50%",
 		height: "12%",
-		enabled: true, // enables OS keyboard to launch
 		textAlign: 'left',
 		font:{fontSize:"25%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
-		placeholder: 'Enter value', // Display on initial launches
-		enableReturnKey: true,
-		suppressReturn : false,
 		hintText: 'Enter value'
 	});
 
 	var answerBox = Titanium.UI.createTextField({
+		borderStyle: Ti.UI.INPUT_BORDERSTYLE_LINE,
+		borderWidth: 1,
 		color: '#000000',
 		backgroundColor: '#FFFFFF',
 		top: "13%",
 		left: "50%",
-		width: "49%",
+		width: "50%",
 		height: "12%",
 		enabled: false, // disables OS keyboard to launch
 		textAlign: 'left',
 		font:{fontSize:"30%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
-		hintText: '='
+		hintText: ' ='
 	});
 	
 	var picker = Ti.UI.createPicker({
 		top:"25%",
 		useSpinner: true
 	});
-	
-	//Convert button will take initial value entered into "entry" and the selections from
-	//the picker. Answer will be displayed in "answerBox".
-	var convertButton = Titanium.UI.createButton({
-	  	color:'#FFFFFF',
-	  	backgroundColor: '#F27935',
-		borderColor: '#000000',
-		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
-		title: 'CONVERT',
-		textAlign: 'center',
-		top: "62%",
-		height: "10%",
-		width: "100%"
-	});
-	
+		
 	//Will send result in "answerBox" to the notes tab
 	var sendButtonTwo = Titanium.UI.createButton({
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
 		borderColor: '#000000',
 		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
-		title: 'SEND TO NOTES',
+		title: 'SEND',
 		textAlign: 'center',
-		top: "72%",
+		top: "67%",
+		left: "0%",
 		height: "10%",
-		width: "100%"
+		width: "50%"
 	});
+	
+	//Will clear both fields
+	var clearButton = Titanium.UI.createButton({
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+		title: 'CLEAR',
+		textAlign: 'center',
+		top: "67%",
+		left: "50%",
+		height: "10%",
+		width: "50%"
+	});
+	
+	function AddKeyboardToolbar(entry)
+{
+  // Add a toolbar on top of the keyboard that includes a Done
+  //   button to blur focus (uses iOS buttons)
+  var flexSpace = Ti.UI.createButton({
+      systemButton:Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE,
+      right:0
+  });
+  var doneButton = Ti.UI.createButton({
+      systemButton:Ti.UI.iPhone.SystemButton.DONE,
+      right:0
+  });
+ 
+  entry.keyboardToolbar = [flexSpace, doneButton];
+  entry.addEventListener('focus', function(e) {
+      TheEdit.keyboardToolbar = [flexSpace, doneButton];
+      doneButton.activeFld = entry;
+      });
+  doneButton.addEventListener('click', function(e) {
+      e.source.activeFld.blur();
+      });
+};
+
+	//Blur keyboard upon click
+	doneButton.addEventListener("click", function(e){
+	entry.blur();
+});
 }
 	
 
 distanceButton.addEventListener('click', function() {
     dataLoad(distance1,firstColumn);
     dataLoad(distance1,secondColumn);
+    picker.reloadColumn(firstColumn);
+    picker.reloadColumn(secondColumn);
 });
 
 weightButton.addEventListener('click', function() {
     dataLoad(weight1,firstColumn);
-    dataLoad(weight1,secondColumn); 
+    dataLoad(weight1,secondColumn);
+    picker.reloadColumn(firstColumn);
+    picker.reloadColumn(secondColumn); 
 });
 
 cookingButton.addEventListener('click', function() {
     dataLoad(cooking1,firstColumn);
-    dataLoad(cooking1,secondColumn); 
+    dataLoad(cooking1,secondColumn);
+    picker.reloadColumn(firstColumn);
+    picker.reloadColumn(secondColumn); 
 });	
 
 //Add all buttons and fields to second tab
@@ -1186,16 +1255,30 @@ view2.add(weightButton);
 view2.add(cookingButton);
 view2.add(entry);
 view2.add(answerBox);
+view2.add(sendButtonTwo);
+view2.add(clearButton);
+
+sendButtonTwo.addEventListener('click', function(e) {
+	Titanium.API.info ('in event listener ' + e);
+    notesText.value = notesText.value + '\n' + entry.value + " " + Ti.App.oneColumn + " = " + answerBox.value + " " + Ti.App.twoColumn; 
+});
+
+clearButton.addEventListener('click', function(e){
+	entry.value = '';
+	answerBox.value = '';
+});
+
+Ti.Gesture.addEventListener("shake", function(e){
+	entry.value = '';
+	answerBox.value = '';
+});
 
 //Set a maximum of 9 characters for text field entry
 entry.addEventListener('change', function(e){
     e.source.value = e.source.value.slice(0,9);
 });
 
-//Blur keyboard upon click
-view2.addEventListener("click", function(e){
-	entry.blur();
-});
+
 	 
 var distance1 = [
     {title: "Millimeter", val:"mm"},
@@ -1301,7 +1384,17 @@ function dataLoad(data,column)
 Ti.App.oneColumn = 'Null';
 Ti.App.twoColumn = 'Null';
 
-convertButton.addEventListener('click', function(e){
+
+//Convert event runs when picker columns or entry field is changed
+entry.addEventListener('change',function(e){
+	convertEvent(e);
+});
+picker.addEventListener('change',function(e){
+	convertEvent(e);
+});
+		
+var convertEvent = function(e){	
+	
 	Ti.App.oneColumn = picker.getSelectedRow(0).val;
 	Ti.App.twoColumn = picker.getSelectedRow(1).val;
 	
@@ -1967,23 +2060,23 @@ convertButton.addEventListener('click', function(e){
 		answerBox.value = (entry.value * 3);
 	}
 	
-});
+};
 
-//Add convert button to window
-view2.add(convertButton);
-view2.add(sendButtonTwo);
 
-sendButtonTwo.addEventListener('click', function(e) {
-	Titanium.API.info ('in event listener ' + e);
-    notesText.value = notesText.value + '\n' + entry.value + " " + Ti.App.oneColumn + " = " + answerBox.value + " " + Ti.App.twoColumn; 
-});
-
-// Tab 3 that displays following
+if(isAndroid){
+	var tab3 = Ti.UI.createTab({
+		title: L('Notes'),
+		icon: '/images/androidnotes.png',		
+		window: win3
+	});
+}
+else{
 	var tab3 = Ti.UI.createTab({
 		title: L('Notes'),
 		icon: '/images/notes.png',		
 		window: win3
 	});
+}	
 	
 var view3 = Ti.UI.createView({
     width:'100%',
@@ -1998,7 +2091,8 @@ if(isAndroid){
     //Create label to alert user that a text area is below
 	var label1 = Ti.UI.createLabel({
 		color: '#F27935',
-		font: { fontSize:'10%' },
+		fontSize:'10%',
+		fontFamily: 'Roboto-Light',
 		text: 'Tap below to add notes',
 		textAlign: 'left',
 		top: "2%",
@@ -2017,18 +2111,18 @@ if(isAndroid){
 		color: '#000000',
 		backgroundColor: '#FFFFFF',
 		verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,
-		returnKeyType: Ti.UI.RETURNKEY_RETURN,
-		keyboardToolbar : [cancel],
+		softKeyboardOnFocus: Titanium.UI.Android.SOFT_KEYBOARD_SHOW_ON_FOCUS,
+        keyboardType:Titanium.UI.KEYBOARD_ASCII,
+        returnKeyType: Ti.UI.RETURNKEY_DONE,
+		enabled: true,
 		scrollable: true,
 		showVerticalScrollIndicator: true,
 		top: "9%",
 		left: "1%",
 		width: "98%",
 		height: "95%",
-		enabled: true, // enables OS keyboard to launch
-		focusable: true,
 		textAlign: 'left',
-		font:{fontSize:"20",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
+		font:{fontSize:"20",fontFamily:'Roboto-Light', fontWeight:'bold'},
 		enableReturnKey: true,
 		suppressReturn : false,
 	});
@@ -2048,8 +2142,8 @@ else{
 	});
 
 	//Create cancel button that can be added to keyboard toolbar
-	var cancel = Ti.UI.createButton({
-    	systemButton : Ti.UI.iPhone.SystemButton.CANCEL
+	var done = Ti.UI.createButton({
+    	systemButton : Ti.UI.iPhone.SystemButton.DONE
 	});
 
 	//Create text area that allows use of keyboard with toolbar
@@ -2058,7 +2152,7 @@ else{
 		backgroundColor: '#FFFFFF',
 		verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP,
 		returnKeyType: Ti.UI.RETURNKEY_RETURN,
-		keyboardToolbar : [cancel],
+		keyboardToolbar : [done],
 		scrollable: true,
 		showVerticalScrollIndicator: true,
 		top: "11%",
@@ -2071,15 +2165,18 @@ else{
 		enableReturnKey: true,
 		suppressReturn : false,
 	});
+	
+	view3.add(done);
+	
+	//Blur keyboard upon click
+	done.addEventListener("click", function(e){
+		notesText.blur();
+	});
 }
 
-//Blur keyboard upon click
-view3.addEventListener("click", function(e){
-	notesText.blur();
-});
+
 
 //Add components to window
-view3.add(cancel);
 view3.add(label1);
 view3.add(notesText);
 
