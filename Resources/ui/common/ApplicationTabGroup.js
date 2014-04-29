@@ -3,7 +3,8 @@
 * Description: This is a calculator app that has
 * the most basic
 * operations: addition, subtraction,
-* multiplication and division. 
+* multiplication and division as well as a conversion
+* function and a note taking page. 
 * 
 * Devices: iPhone and Android (only)
 * 
@@ -460,7 +461,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
-		top: "55%",
+		top: "54.9%",
 		left: "0%",
 		width: "25%",
 		height: "15%",
@@ -475,7 +476,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
-		top: "55%",
+		top: "54.9%",
 		left: "25%",
 		width: "25%",
 		height: "15%",
@@ -490,7 +491,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
-		top: "55%",
+		top: "54.9%",
 		left: "50%",
 		width: "25%",
 		height: "15%",
@@ -505,7 +506,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
-		top: "70%",
+		top: "69.8%",
 		left: "0%",
 		width: "25%",
 		height: "15%",
@@ -520,7 +521,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
-		top: "70%",
+		top: "69.8%",
 		left: "25%",
 		width: "25%",
 		height: "15%",
@@ -535,7 +536,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
-		top: "70%",
+		top: "69.8%",
 		left: "50%",
 		width: "25%",
 		height: "15%",
@@ -550,7 +551,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
-		top: "85%",
+		top: "84.8%",
 		left: "0%",
 		width: "50%",
 		height: "15%",
@@ -565,7 +566,7 @@ else{
 		color:'#000000',
 		backgroundColor: '#FFFFFF',
 		borderColor: '#000000',
-		top: "85%",
+		top: "84.8%",
 		left: "50%",
 		width: "25%",
 		height: "15%",
@@ -579,7 +580,7 @@ else{
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
 		borderColor: '#000000',
-		top: "55%",
+		top: "54.9%",
 		left: "75%",
 		width: "25%",
 		height: "15%",
@@ -593,7 +594,7 @@ else{
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
 		borderColor: '#000000',
-		top: "70%",
+		top: "69.8%",
 		left: "75%",
 		width: "25%",
 		height: "15%",
@@ -608,7 +609,7 @@ else{
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
 		borderColor: '#000000',
-		top: "85%",
+		top: "84.8%",
 		left: "75%",
 		width: "25%",
 		height: "15%",
@@ -1034,6 +1035,11 @@ if(isAndroid){
 		font:{fontSize:"20%",fontFamily:'Roboto-Light', fontWeight:'bold'},
 		hintText: 'Enter value'
 	});
+	
+	entry.addEventListener('done', function()
+	{
+    	entry.blur();
+	});
 
 	var answerBox = Titanium.UI.createTextField({
 		color: '#000000',
@@ -1164,7 +1170,7 @@ else{
 		font:{fontSize:"30%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
 		hintText: ' ='
 	});
-	
+		
 	var picker = Ti.UI.createPicker({
 		top:"25%",
 		useSpinner: true
@@ -1277,9 +1283,7 @@ Ti.Gesture.addEventListener("shake", function(e){
 entry.addEventListener('change', function(e){
     e.source.value = e.source.value.slice(0,9);
 });
-
-
-	 
+ 
 var distance1 = [
     {title: "Millimeter", val:"mm"},
     {title: "Centimeter", val:"cm"},
@@ -1314,9 +1318,34 @@ var cooking1 = [
     {title: "Teaspoon", val:"tsp"},
     {title: "Tablespoon", val:"tbsp"}
 ];
+
+var multiplier = [
+	{title: "1", val: "1"},
+	{title: "2", val: "2"},
+	{title: "3", val: "3"},
+	{title: "4", val: "4"},
+	{title: "5", val: "5"},
+	{title: "6", val: "6"},
+	{title: "7", val: "7"},
+	{title: "8", val: "8"},
+	{title: "9", val: "9"},
+	{title: "10", val: "10"},
+];
+
+var zeroColumn = Ti.UI.createPickerColumn({
+    width: 50
+});
+ 
+for (var x = 0; x < multiplier.length; x++)
+{
+    zeroColumn.addRow(Ti.UI.createPickerRow({
+        title:multiplier[x].title, 
+        val:multiplier[x].val
+    }));
+}
  
 var firstColumn = Ti.UI.createPickerColumn({
-    width: 160
+    width: 140
 });
  
 for (var x = 0; x < cooking1.length; x++)
@@ -1328,7 +1357,7 @@ for (var x = 0; x < cooking1.length; x++)
 }
  
 var secondColumn = Ti.UI.createPickerColumn({
-    width: 160,
+    width: 140,
     textAlign: 'right'
 }); 
  
@@ -1340,13 +1369,14 @@ for (var x = 0; x < cooking1.length; x++){
 }
  
 picker.selectionIndicator = true;
-picker.add([firstColumn,secondColumn]);
+picker.add([zeroColumn,firstColumn,secondColumn]);
  
 view2.add(picker);
 
 //Set starting selections for picker
-picker.setSelectedRow(0, 3, false); 
-picker.setSelectedRow(1, 4, false); 
+picker.setSelectedRow(0, 0, false); 
+picker.setSelectedRow(1, 3, false); 
+picker.setSelectedRow(2, 5, false);
  
 function dataLoad(data,column)
 {
@@ -1395,8 +1425,9 @@ picker.addEventListener('change',function(e){
 		
 var convertEvent = function(e){	
 	
-	Ti.App.oneColumn = picker.getSelectedRow(0).val;
-	Ti.App.twoColumn = picker.getSelectedRow(1).val;
+	Ti.App.zeroColumn = picker.getSelectedRow(0).val;
+	Ti.App.oneColumn = picker.getSelectedRow(1).val;
+	Ti.App.twoColumn = picker.getSelectedRow(2).val;
 	
 	//If both picker columns are the same then the answer is simply the entry	
 	if (Ti.App.oneColumn == Ti.App.twoColumn){
@@ -1404,660 +1435,660 @@ var convertEvent = function(e){
 	}
 	//Millimeter conversions
 	else if (Ti.App.oneColumn == 'mm' && Ti.App.twoColumn == 'cm'){
-		answerBox.value = (entry.value * 0.1);
+		answerBox.value = (entry.value * 0.1 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mm' && Ti.App.twoColumn == 'm'){
-		answerBox.value = (entry.value * 0.01);
+		answerBox.value = (entry.value * 0.01 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mm' && Ti.App.twoColumn == 'km'){
-		answerBox.value = (entry.value * .000001);
+		answerBox.value = (entry.value * .000001 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mm' && Ti.App.twoColumn == 'in'){
-		answerBox.value = (entry.value * 0.0393701);
+		answerBox.value = (entry.value * 0.0393701 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mm' && Ti.App.twoColumn == 'ft'){
-		answerBox.value = (entry.value * 0.00328084);
+		answerBox.value = (entry.value * 0.00328084 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mm' && Ti.App.twoColumn == 'yd'){
-		answerBox.value = (entry.value * 0.00109361);
+		answerBox.value = (entry.value * 0.00109361 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mm' && Ti.App.twoColumn == 'mi'){
-		answerBox.value = (entry.value * .00000062137);
+		answerBox.value = (entry.value * .00000062137 * Ti.App.zeroColumn);
 	}
 	
 	//Centimeter conversions
 	else if (Ti.App.oneColumn == 'cm' && Ti.App.twoColumn == 'mm'){
-		answerBox.value = (entry.value * 10);
+		answerBox.value = (entry.value * 10 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'cm' && Ti.App.twoColumn == 'm'){
-		answerBox.value = (entry.value * 0.1);
+		answerBox.value = (entry.value * 0.1 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'cm' && Ti.App.twoColumn == 'km'){
-		answerBox.value = (entry.value * .00001);
+		answerBox.value = (entry.value * .00001 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'cm' && Ti.App.twoColumn == 'in'){
-		answerBox.value = (entry.value * 0.393701);
+		answerBox.value = (entry.value * 0.393701 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'cm' && Ti.App.twoColumn == 'ft'){
-		answerBox.value = (entry.value * 0.0328084);
+		answerBox.value = (entry.value * 0.0328084 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'cm' && Ti.App.twoColumn == 'yd'){
-		answerBox.value = (entry.value * 0.0109361);
+		answerBox.value = (entry.value * 0.0109361 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'cm' && Ti.App.twoColumn == 'mi'){
-		answerBox.value = (entry.value * .0000062137);
+		answerBox.value = (entry.value * .0000062137 * Ti.App.zeroColumn);
 	}
 	
 	//Meter conversions
 	else if (Ti.App.oneColumn == 'm' && Ti.App.twoColumn == 'mm'){
-		answerBox.value = (entry.value * 100);
+		answerBox.value = (entry.value * 100 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'm' && Ti.App.twoColumn == 'cm'){
-		answerBox.value = (entry.value * 10);
+		answerBox.value = (entry.value * 10 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'm' && Ti.App.twoColumn == 'km'){
-		answerBox.value = (entry.value * 0.001);
+		answerBox.value = (entry.value * 0.001 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'm' && Ti.App.twoColumn == 'in'){
-		answerBox.value = (entry.value * 39.3701);
+		answerBox.value = (entry.value * 39.3701 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'm' && Ti.App.twoColumn == 'ft'){
-		answerBox.value = (entry.value * 3.28084);
+		answerBox.value = (entry.value * 3.28084 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'm' && Ti.App.twoColumn == 'yd'){
-		answerBox.value = (entry.value * 1.09361);
+		answerBox.value = (entry.value * 1.09361 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'm' && Ti.App.twoColumn == 'mi'){
-		answerBox.value = (entry.value * 0.000621371);
+		answerBox.value = (entry.value * 0.000621371 * Ti.App.zeroColumn);
 	}
 	
 	//Kilometer conversions
 	else if (Ti.App.oneColumn == 'km' && Ti.App.twoColumn == 'mm'){
-		answerBox.value = (entry.value * 1000000);
+		answerBox.value = (entry.value * 1000000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'km' && Ti.App.twoColumn == 'cm'){
-		answerBox.value = (entry.value * 100000);
+		answerBox.value = (entry.value * 100000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'km' && Ti.App.twoColumn == 'm'){
-		answerBox.value = (entry.value * 1000);
+		answerBox.value = (entry.value * 1000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'km' && Ti.App.twoColumn == 'in'){
-		answerBox.value = (entry.value * 39370.1);
+		answerBox.value = (entry.value * 39370.1 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'km' && Ti.App.twoColumn == 'ft'){
-		answerBox.value = (entry.value * 3280.84);
+		answerBox.value = (entry.value * 3280.84 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'km' && Ti.App.twoColumn == 'yd'){
-		answerBox.value = (entry.value * 1093.61);
+		answerBox.value = (entry.value * 1093.61 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'km' && Ti.App.twoColumn == 'mi'){
-		answerBox.value = (entry.value * 0.621371);
+		answerBox.value = (entry.value * 0.621371 * Ti.App.zeroColumn);
 	}
 	
 	//Inch conversions
 	else if (Ti.App.oneColumn == 'in' && Ti.App.twoColumn == 'mm'){
-		answerBox.value = (entry.value * 25.4);
+		answerBox.value = (entry.value * 25.4 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'in' && Ti.App.twoColumn == 'cm'){
-		answerBox.value = (entry.value * 2.54);
+		answerBox.value = (entry.value * 2.54 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'in' && Ti.App.twoColumn == 'm'){
-		answerBox.value = (entry.value * 0.0254);
+		answerBox.value = (entry.value * 0.0254 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'in' && Ti.App.twoColumn == 'km'){
-		answerBox.value = (entry.value * .0000254);
+		answerBox.value = (entry.value * .0000254 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'in' && Ti.App.twoColumn == 'ft'){
-		answerBox.value = (entry.value * 0.0833333);
+		answerBox.value = (entry.value * 0.0833333 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'in' && Ti.App.twoColumn == 'yd'){
-		answerBox.value = (entry.value * 0.0277778);
+		answerBox.value = (entry.value * 0.0277778 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'in' && Ti.App.twoColumn == 'mi'){
-		answerBox.value = (entry.value * .0000015783);
+		answerBox.value = (entry.value * .0000015783 * Ti.App.zeroColumn);
 	}
 	
 	//Foot conversions
 	else if (Ti.App.oneColumn == 'ft' && Ti.App.twoColumn == 'mm'){
-		answerBox.value = (entry.value * 304.8);
+		answerBox.value = (entry.value * 304.8 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ft' && Ti.App.twoColumn == 'cm'){
-		answerBox.value = (entry.value * 30.48);
+		answerBox.value = (entry.value * 30.48 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ft' && Ti.App.twoColumn == 'm'){
-		answerBox.value = (entry.value * 0.3048);
+		answerBox.value = (entry.value * 0.3048 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ft' && Ti.App.twoColumn == 'km'){
-		answerBox.value = (entry.value * 0.0003048);
+		answerBox.value = (entry.value * 0.0003048 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ft' && Ti.App.twoColumn == 'in'){
-		answerBox.value = (entry.value * 12);
+		answerBox.value = (entry.value * 12 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ft' && Ti.App.twoColumn == 'yd'){
-		answerBox.value = (entry.value * 0.333333);
+		answerBox.value = (entry.value * 0.333333 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ft' && Ti.App.twoColumn == 'mi'){
-		answerBox.value = (entry.value * 0.000189394);
+		answerBox.value = (entry.value * 0.000189394 * Ti.App.zeroColumn);
 	}
 	
 	//Yard conversions
 	else if (Ti.App.oneColumn == 'yd' && Ti.App.twoColumn == 'mm'){
-		answerBox.value = (entry.value * 914.4);
+		answerBox.value = (entry.value * 914.4 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'yd' && Ti.App.twoColumn == 'cm'){
-		answerBox.value = (entry.value * 91.44);
+		answerBox.value = (entry.value * 91.44 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'yd' && Ti.App.twoColumn == 'm'){
-		answerBox.value = (entry.value * 0.9144);
+		answerBox.value = (entry.value * 0.9144 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'yd' && Ti.App.twoColumn == 'km'){
-		answerBox.value = (entry.value * 0.0009144);
+		answerBox.value = (entry.value * 0.0009144 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'yd' && Ti.App.twoColumn == 'in'){
-		answerBox.value = (entry.value * 36);
+		answerBox.value = (entry.value * 36 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'yd' && Ti.App.twoColumn == 'ft'){
-		answerBox.value = (entry.value * 3);
+		answerBox.value = (entry.value * 3 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'yd' && Ti.App.twoColumn == 'mi'){
-		answerBox.value = (entry.value * 0.000568182);
+		answerBox.value = (entry.value * 0.000568182 * Ti.App.zeroColumn);
 	}
 	
 	//Mile conversions
 	else if (Ti.App.oneColumn == 'mi' && Ti.App.twoColumn == 'mm'){
-		answerBox.value = (entry.value * 1609340);
+		answerBox.value = (entry.value * 1609340 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mi' && Ti.App.twoColumn == 'cm'){
-		answerBox.value = (entry.value * 160934);
+		answerBox.value = (entry.value * 160934 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mi' && Ti.App.twoColumn == 'm'){
-		answerBox.value = (entry.value * 1609.34);
+		answerBox.value = (entry.value * 1609.34 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mi' && Ti.App.twoColumn == 'km'){
-		answerBox.value = (entry.value * 1.60934);
+		answerBox.value = (entry.value * 1.60934 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mi' && Ti.App.twoColumn == 'in'){
-		answerBox.value = (entry.value * 63360);
+		answerBox.value = (entry.value * 63360 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mi' && Ti.App.twoColumn == 'ft'){
-		answerBox.value = (entry.value * 5280);
+		answerBox.value = (entry.value * 5280 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'mi' && Ti.App.twoColumn == 'yd'){
-		answerBox.value = (entry.value * 1760);
+		answerBox.value = (entry.value * 1760 * Ti.App.zeroColumn);
 	}
 	
 	//Carat conversions
 	else if (Ti.App.oneColumn == 'ct' && Ti.App.twoColumn == 'g'){
-		answerBox.value = (entry.value * 0.2);
+		answerBox.value = (entry.value * 0.2 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ct' && Ti.App.twoColumn == 'kg'){
-		answerBox.value = (entry.value * 0.0002);
+		answerBox.value = (entry.value * 0.0002 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ct' && Ti.App.twoColumn == 'US t'){
-		answerBox.value = (entry.value * .000000220462262 );
+		answerBox.value = (entry.value * .000000220462262 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ct' && Ti.App.twoColumn == 'UK t'){
-		answerBox.value = (entry.value * .000000196841306);
+		answerBox.value = (entry.value * .000000196841306 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ct' && Ti.App.twoColumn == 'oz'){
-		answerBox.value = (entry.value * 0.00705479239);
+		answerBox.value = (entry.value * 0.00705479239 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ct' && Ti.App.twoColumn == 'lb'){
-		answerBox.value = (entry.value * 0.000440924524);
+		answerBox.value = (entry.value * 0.000440924524 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ct' && Ti.App.twoColumn == 't'){
-		answerBox.value = (entry.value * .0000002);
+		answerBox.value = (entry.value * .0000002 * Ti.App.zeroColumn);
 	}
 	
 	//Gram conversions
 	else if (Ti.App.oneColumn == 'g' && Ti.App.twoColumn == 'ct'){
-		answerBox.value = (entry.value * 5);
+		answerBox.value = (entry.value * 5 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'g' && Ti.App.twoColumn == 'kg'){
-		answerBox.value = (entry.value * 0.001);
+		answerBox.value = (entry.value * 0.001 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'g' && Ti.App.twoColumn == 'US t'){
-		answerBox.value = (entry.value * .0000011023);
+		answerBox.value = (entry.value * .0000011023 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'g' && Ti.App.twoColumn == 'UK t'){
-		answerBox.value = (entry.value * .00000098421);
+		answerBox.value = (entry.value * .00000098421 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'g' && Ti.App.twoColumn == 'oz'){
-		answerBox.value = (entry.value * 0.035274);
+		answerBox.value = (entry.value * 0.035274 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'g' && Ti.App.twoColumn == 'lb'){
-		answerBox.value = (entry.value * 0.00220462);
+		answerBox.value = (entry.value * 0.00220462 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'g' && Ti.App.twoColumn == 't'){
-		answerBox.value = (entry.value * .000001);
+		answerBox.value = (entry.value * .000001 * Ti.App.zeroColumn);
 	}
 	
 	//Kilogram conversions
 	else if (Ti.App.oneColumn == 'kg' && Ti.App.twoColumn == 'ct'){
-		answerBox.value = (entry.value * 5000);
+		answerBox.value = (entry.value * 5000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'kg' && Ti.App.twoColumn == 'g'){
-		answerBox.value = (entry.value * 1000);
+		answerBox.value = (entry.value * 1000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'kg' && Ti.App.twoColumn == 'US t'){
-		answerBox.value = (entry.value * 0.00110231);
+		answerBox.value = (entry.value * 0.00110231 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'kg' && Ti.App.twoColumn == 'UK t'){
-		answerBox.value = (entry.value * 0.000984207);
+		answerBox.value = (entry.value * 0.000984207 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'kg' && Ti.App.twoColumn == 'oz'){
-		answerBox.value = (entry.value * 35.274);
+		answerBox.value = (entry.value * 35.274 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'kg' && Ti.App.twoColumn == 'lb'){
-		answerBox.value = (entry.value * 2.20462);
+		answerBox.value = (entry.value * 2.20462 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'kg' && Ti.App.twoColumn == 't'){
-		answerBox.value = (entry.value * 0.001);
+		answerBox.value = (entry.value * 0.001 * Ti.App.zeroColumn);
 	}
 	
 	//Short Ton conversions
 	else if (Ti.App.oneColumn == 'US t' && Ti.App.twoColumn == 'ct'){
-		answerBox.value = (entry.value * 4535923.7);
+		answerBox.value = (entry.value * 4535923.7 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'US t' && Ti.App.twoColumn == 'g'){
-		answerBox.value = (entry.value * 907185);
+		answerBox.value = (entry.value * 907185 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'US t' && Ti.App.twoColumn == 'kg'){
-		answerBox.value = (entry.value * 907.185);
+		answerBox.value = (entry.value * 907.185 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'US t' && Ti.App.twoColumn == 'UK t'){
-		answerBox.value = (entry.value * 0.892857);
+		answerBox.value = (entry.value * 0.892857 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'US t' && Ti.App.twoColumn == 'oz'){
-		answerBox.value = (entry.value * 32000);
+		answerBox.value = (entry.value * 32000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'US t' && Ti.App.twoColumn == 'lb'){
-		answerBox.value = (entry.value * 2000);
+		answerBox.value = (entry.value * 2000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'US t' && Ti.App.twoColumn == 't'){
-		answerBox.value = (entry.value * 0.907185);
+		answerBox.value = (entry.value * 0.907185 * Ti.App.zeroColumn);
 	}
 	
 	//Long Ton conversions
 	else if (Ti.App.oneColumn == 'UK t' && Ti.App.twoColumn == 'ct'){
-		answerBox.value = (entry.value * 5080234.54);
+		answerBox.value = (entry.value * 5080234.54 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'UK t' && Ti.App.twoColumn == 'g'){
-		answerBox.value = (entry.value * 1016050);
+		answerBox.value = (entry.value * 1016050 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'UK t' && Ti.App.twoColumn == 'kg'){
-		answerBox.value = (entry.value * 1016.05);
+		answerBox.value = (entry.value * 1016.05 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'UK t' && Ti.App.twoColumn == 'US t'){
-		answerBox.value = (entry.value * 1.12);
+		answerBox.value = (entry.value * 1.12 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'UK t' && Ti.App.twoColumn == 'oz'){
-		answerBox.value = (entry.value * 35840);
+		answerBox.value = (entry.value * 35840 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'UK t' && Ti.App.twoColumn == 'lb'){
-		answerBox.value = (entry.value * 2240);
+		answerBox.value = (entry.value * 2240 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'UK t' && Ti.App.twoColumn == 't'){
-		answerBox.value = (entry.value * 1.01605);
+		answerBox.value = (entry.value * 1.01605 * Ti.App.zeroColumn);
 	}
 	
 	//Ounce conversions
 	else if (Ti.App.oneColumn == 'oz' && Ti.App.twoColumn == 'ct'){
-		answerBox.value = (entry.value * 141.747616);
+		answerBox.value = (entry.value * 141.747616 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'oz' && Ti.App.twoColumn == 'g'){
-		answerBox.value = (entry.value * 28.3495);
+		answerBox.value = (entry.value * 28.3495 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'oz' && Ti.App.twoColumn == 'kg'){
-		answerBox.value = (entry.value * 0.0283495);
+		answerBox.value = (entry.value * 0.0283495 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'oz' && Ti.App.twoColumn == 'US t'){
-		answerBox.value = (entry.value * .00003125);
+		answerBox.value = (entry.value * .00003125 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'oz' && Ti.App.twoColumn == 'UK t'){
-		answerBox.value = (entry.value * .000027902);
+		answerBox.value = (entry.value * .000027902 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'oz' && Ti.App.twoColumn == 'lb'){
-		answerBox.value = (entry.value * 0.0625);
+		answerBox.value = (entry.value * 0.0625 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'oz' && Ti.App.twoColumn == 't'){
-		answerBox.value = (entry.value * .00002835);
+		answerBox.value = (entry.value * .00002835 * Ti.App.zeroColumn);
 	}
 	
 	//Pound conversions
 	else if (Ti.App.oneColumn == 'lb' && Ti.App.twoColumn == 'ct'){
-		answerBox.value = (entry.value * 2267.96185);
+		answerBox.value = (entry.value * 2267.96185 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'lb' && Ti.App.twoColumn == 'g'){
-		answerBox.value = (entry.value * 453.592);
+		answerBox.value = (entry.value * 453.592 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'lb' && Ti.App.twoColumn == 'kg'){
-		answerBox.value = (entry.value * 0.453592);
+		answerBox.value = (entry.value * 0.453592 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'lb' && Ti.App.twoColumn == 'US t'){
-		answerBox.value = (entry.value * 0.0005);
+		answerBox.value = (entry.value * 0.0005 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'lb' && Ti.App.twoColumn == 'UK t'){
-		answerBox.value = (entry.value * 0.000446429);
+		answerBox.value = (entry.value * 0.000446429 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'lb' && Ti.App.twoColumn == 'oz'){
-		answerBox.value = (entry.value * 16);
+		answerBox.value = (entry.value * 16 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'lb' && Ti.App.twoColumn == 't'){
-		answerBox.value = (entry.value * 0.000453592);
+		answerBox.value = (entry.value * 0.000453592 * Ti.App.zeroColumn);
 	}
 	
 	//Metric Ton conversions
 	else if (Ti.App.oneColumn == 't' && Ti.App.twoColumn == 'ct'){
-		answerBox.value = (entry.value * 2267.96185);
+		answerBox.value = (entry.value * 5000000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 't' && Ti.App.twoColumn == 'g'){
-		answerBox.value = (entry.value * 2267.96185);
+		answerBox.value = (entry.value * 1000000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 't' && Ti.App.twoColumn == 'kg'){
-		answerBox.value = (entry.value * 2267.96185);
+		answerBox.value = (entry.value * 1000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 't' && Ti.App.twoColumn == 'US t'){
-		answerBox.value = (entry.value * 2267.96185);
+		answerBox.value = (entry.value * 1.10231 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 't' && Ti.App.twoColumn == 'UK t'){
-		answerBox.value = (entry.value * 2267.96185);
+		answerBox.value = (entry.value * 0.984207 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 't' && Ti.App.twoColumn == 'oz'){
-		answerBox.value = (entry.value * 2267.96185);
+		answerBox.value = (entry.value * 35274 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 't' && Ti.App.twoColumn == 'lb'){
-		answerBox.value = (entry.value * 2267.96185);
+		answerBox.value = (entry.value * 2204.62 * Ti.App.zeroColumn);
 	}
 	
 	//Milliliter conversions
 	else if (Ti.App.oneColumn == 'ml' && Ti.App.twoColumn == 'L'){
-		answerBox.value = (entry.value * 0.001);
+		answerBox.value = (entry.value * 0.001 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ml' && Ti.App.twoColumn == 'fl oz'){
-		answerBox.value = (entry.value * 0.033814);
+		answerBox.value = (entry.value * 0.033814 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ml' && Ti.App.twoColumn == 'shot'){
-		answerBox.value = (entry.value * 0.02254268);
+		answerBox.value = (entry.value * 0.02254268 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ml' && Ti.App.twoColumn == 'c'){
-		answerBox.value = (entry.value * 0.00422675);
+		answerBox.value = (entry.value * 0.00422675 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ml' && Ti.App.twoColumn == 'pt'){
-		answerBox.value = (entry.value * 0.00211338);
+		answerBox.value = (entry.value * 0.00211338 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ml' && Ti.App.twoColumn == 'qt'){
-		answerBox.value = (entry.value * 0.00105669);
+		answerBox.value = (entry.value * 0.00105669 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ml' && Ti.App.twoColumn == 'gal'){
-		answerBox.value = (entry.value * 0.000264172);
+		answerBox.value = (entry.value * 0.000264172 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ml' && Ti.App.twoColumn == 'tsp'){
-		answerBox.value = (entry.value * 0.168936);
+		answerBox.value = (entry.value * 0.168936 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'ml' && Ti.App.twoColumn == 'tbsp'){
-		answerBox.value = (entry.value * 0.0563121);
+		answerBox.value = (entry.value * 0.0563121 * Ti.App.zeroColumn);
 	}
 	
 	//Liter conversions
 	else if (Ti.App.oneColumn == 'L' && Ti.App.twoColumn == 'ml'){
-		answerBox.value = (entry.value * 1000);
+		answerBox.value = (entry.value * 1000 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'L' && Ti.App.twoColumn == 'fl oz'){
-		answerBox.value = (entry.value * 33.814);
+		answerBox.value = (entry.value * 33.814 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'L' && Ti.App.twoColumn == 'shot'){
-		answerBox.value = (entry.value * 22.5426667);
+		answerBox.value = (entry.value * 22.5426667 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'L' && Ti.App.twoColumn == 'c'){
-		answerBox.value = (entry.value * 4.22675);
+		answerBox.value = (entry.value * 4.22675 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'L' && Ti.App.twoColumn == 'pt'){
-		answerBox.value = (entry.value * 2.11338);
+		answerBox.value = (entry.value * 2.11338 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'L' && Ti.App.twoColumn == 'qt'){
-		answerBox.value = (entry.value * 1.05669);
+		answerBox.value = (entry.value * 1.05669 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'L' && Ti.App.twoColumn == 'gal'){
-		answerBox.value = (entry.value * 0.264172);
+		answerBox.value = (entry.value * 0.264172 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'L' && Ti.App.twoColumn == 'tsp'){
-		answerBox.value = (entry.value * 168.936);
+		answerBox.value = (entry.value * 168.936 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'L' && Ti.App.twoColumn == 'tbsp'){
-		answerBox.value = (entry.value * 56.3121);
+		answerBox.value = (entry.value * 56.3121 * Ti.App.zeroColumn);
 	}
 	
 	//Fluid Ounce conversions
 	else if (Ti.App.oneColumn == 'fl oz' && Ti.App.twoColumn == 'ml'){
-		answerBox.value = (entry.value * 29.5735);
+		answerBox.value = (entry.value * 29.5735 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'fl oz' && Ti.App.twoColumn == 'L'){
-		answerBox.value = (entry.value * 0.0295735);
+		answerBox.value = (entry.value * 0.0295735 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'fl oz' && Ti.App.twoColumn == 'shot'){
-		answerBox.value = (entry.value * 0.666667);
+		answerBox.value = (entry.value * 0.666667 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'fl oz' && Ti.App.twoColumn == 'c'){
-		answerBox.value = (entry.value * 0.125);
+		answerBox.value = (entry.value * 0.125 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'fl oz' && Ti.App.twoColumn == 'pt'){
-		answerBox.value = (entry.value * 0.0625);
+		answerBox.value = (entry.value * 0.0625 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'fl oz' && Ti.App.twoColumn == 'qt'){
-		answerBox.value = (entry.value * 0.03125);
+		answerBox.value = (entry.value * 0.03125 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'fl oz' && Ti.App.twoColumn == 'gal'){
-		answerBox.value = (entry.value * 0.0078125);
+		answerBox.value = (entry.value * 0.0078125 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'fl oz' && Ti.App.twoColumn == 'tsp'){
-		answerBox.value = (entry.value * 4.99604);
+		answerBox.value = (entry.value * 4.99604 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'fl oz' && Ti.App.twoColumn == 'tbsp'){
-		answerBox.value = (entry.value * 1.66535);
+		answerBox.value = (entry.value * 1.66535 * Ti.App.zeroColumn);
 	}
 	
 	//Shot conversions
 	else if (Ti.App.oneColumn == 'shot' && Ti.App.twoColumn == 'ml'){
-		answerBox.value = (entry.value * 44.3603);
+		answerBox.value = (entry.value * 44.3603 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'shot' && Ti.App.twoColumn == 'L'){
-		answerBox.value = (entry.value * 0.0443603);
+		answerBox.value = (entry.value * 0.0443603 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'shot' && Ti.App.twoColumn == 'fl oz'){
-		answerBox.value = (entry.value * 1.5);
+		answerBox.value = (entry.value * 1.5 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'shot' && Ti.App.twoColumn == 'c'){
-		answerBox.value = (entry.value * 0.1875);
+		answerBox.value = (entry.value * 0.1875 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'shot' && Ti.App.twoColumn == 'pt'){
-		answerBox.value = (entry.value * 0.09375);
+		answerBox.value = (entry.value * 0.09375 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'shot' && Ti.App.twoColumn == 'qt'){
-		answerBox.value = (entry.value * 0.046875);
+		answerBox.value = (entry.value * 0.046875 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'shot' && Ti.App.twoColumn == 'gal'){
-		answerBox.value = (entry.value * 0.0117187);
+		answerBox.value = (entry.value * 0.0117187 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'shot' && Ti.App.twoColumn == 'tsp'){
-		answerBox.value = (entry.value * 7.49406);
+		answerBox.value = (entry.value * 7.49406 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'shot' && Ti.App.twoColumn == 'tbsp'){
-		answerBox.value = (entry.value * 2.49802);
+		answerBox.value = (entry.value * 2.49802 * Ti.App.zeroColumn);
 	}
 
 	//Cup conversions
 	else if (Ti.App.oneColumn == 'c' && Ti.App.twoColumn == 'ml'){
-		answerBox.value = (entry.value * 236.588);
+		answerBox.value = (entry.value * 236.588 * Ti.App.zeroColumn);
 	}	
 	else if (Ti.App.oneColumn == 'c' && Ti.App.twoColumn == 'l'){
-		answerBox.value = (entry.value * 0.236588);
+		answerBox.value = (entry.value * 0.236588 * Ti.App.zeroColumn);
 	}	
 	else if (Ti.App.oneColumn == 'c' && Ti.App.twoColumn == 'fl oz'){
-		answerBox.value = (entry.value * 8);
+		answerBox.value = (entry.value * 8 * Ti.App.zeroColumn);
 	}	
 	else if (Ti.App.oneColumn == 'c' && Ti.App.twoColumn == 'shot'){
-		answerBox.value = (entry.value * 5.333333);
+		answerBox.value = (entry.value * 5.333333 * Ti.App.zeroColumn);
 	}	
 	else if (Ti.App.oneColumn == 'c' && Ti.App.twoColumn == 'pt'){
-		answerBox.value = (entry.value * 0.5);
+		answerBox.value = (entry.value * 0.5 * Ti.App.zeroColumn);
 	}	
 	else if (Ti.App.oneColumn == 'c' && Ti.App.twoColumn == 'qt'){
-		answerBox.value = (entry.value * 0.25);
+		answerBox.value = (entry.value * 0.25 * Ti.App.zeroColumn);
 	}	
 	else if (Ti.App.oneColumn == 'c' && Ti.App.twoColumn == 'gal'){
-		answerBox.value = (entry.value * 0.0625);
+		answerBox.value = (entry.value * 0.0625 * Ti.App.zeroColumn);
 	}	
 	else if (Ti.App.oneColumn == 'c' && Ti.App.twoColumn == 'tsp'){
-		answerBox.value = (entry.value * 39.9683);
+		answerBox.value = (entry.value * 39.9683 * Ti.App.zeroColumn);
 	}	
 	else if (Ti.App.oneColumn == 'c' && Ti.App.twoColumn == 'tbsp'){
-		answerBox.value = (entry.value * 13.3228);
+		answerBox.value = (entry.value * 13.3228 * Ti.App.zeroColumn);
 	}	
 	
 	//Pint conversions
 	else if (Ti.App.oneColumn == 'pt' && Ti.App.twoColumn == 'ml'){
-		answerBox.value = (entry.value * 473.176);
+		answerBox.value = (entry.value * 473.176 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'pt' && Ti.App.twoColumn == 'l'){
-		answerBox.value = (entry.value * 0.473176);
+		answerBox.value = (entry.value * 0.473176 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'pt' && Ti.App.twoColumn == 'fl oz'){
-		answerBox.value = (entry.value * 16);
+		answerBox.value = (entry.value * 16 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'pt' && Ti.App.twoColumn == 'shot'){
-		answerBox.value = (entry.value * 10.66666);
+		answerBox.value = (entry.value * 10.66666 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'pt' && Ti.App.twoColumn == 'c'){
-		answerBox.value = (entry.value * 2);
+		answerBox.value = (entry.value * 2 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'pt' && Ti.App.twoColumn == 'qt'){
-		answerBox.value = (entry.value * 0.5);
+		answerBox.value = (entry.value * 0.5 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'pt' && Ti.App.twoColumn == 'gal'){
-		answerBox.value = (entry.value * 0.125);
+		answerBox.value = (entry.value * 0.125 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'pt' && Ti.App.twoColumn == 'tsp'){
-		answerBox.value = (entry.value * 79.9367);
+		answerBox.value = (entry.value * 79.9367 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'pt' && Ti.App.twoColumn == 'tbsp'){
-		answerBox.value = (entry.value * 26.6456);
+		answerBox.value = (entry.value * 26.6456 * Ti.App.zeroColumn);
 	}
 	
 	//Quart conversions
 	else if (Ti.App.oneColumn == 'qt' && Ti.App.twoColumn == 'ml'){
-		answerBox.value = (entry.value * 946.353);
+		answerBox.value = (entry.value * 946.353 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'qt' && Ti.App.twoColumn == 'l'){
-		answerBox.value = (entry.value * 0.946353);
+		answerBox.value = (entry.value * 0.946353 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'qt' && Ti.App.twoColumn == 'fl oz'){
-		answerBox.value = (entry.value * 32);
+		answerBox.value = (entry.value * 32 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'qt' && Ti.App.twoColumn == 'shot'){
-		answerBox.value = (entry.value * 21.33333);
+		answerBox.value = (entry.value * 21.33333 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'qt' && Ti.App.twoColumn == 'c'){
-		answerBox.value = (entry.value * 4);
+		answerBox.value = (entry.value * 4 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'qt' && Ti.App.twoColumn == 'pt'){
-		answerBox.value = (entry.value * 2);
+		answerBox.value = (entry.value * 2 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'qt' && Ti.App.twoColumn == 'gal'){
-		answerBox.value = (entry.value * 0.25);
+		answerBox.value = (entry.value * 0.25 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'qt' && Ti.App.twoColumn == 'tsp'){
-		answerBox.value = (entry.value * 159.873);
+		answerBox.value = (entry.value * 159.873 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'qt' && Ti.App.twoColumn == 'tbsp'){
-		answerBox.value = (entry.value * 53.2911);
+		answerBox.value = (entry.value * 53.2911 * Ti.App.zeroColumn);
 	}
 	
 	//Gallon conversions
 	else if (Ti.App.oneColumn == 'gal' && Ti.App.twoColumn == 'ml'){
-		answerBox.value = (entry.value * 3785.41);
+		answerBox.value = (entry.value * 3785.41 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'gal' && Ti.App.twoColumn == 'l'){
-		answerBox.value = (entry.value * 3.78541);
+		answerBox.value = (entry.value * 3.78541 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'gal' && Ti.App.twoColumn == 'fl oz'){
-		answerBox.value = (entry.value * 128);
+		answerBox.value = (entry.value * 128 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'gal' && Ti.App.twoColumn == 'shot'){
-		answerBox.value = (entry.value * 85.3333);
+		answerBox.value = (entry.value * 85.3333 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'gal' && Ti.App.twoColumn == 'c'){
-		answerBox.value = (entry.value * 16);
+		answerBox.value = (entry.value * 16 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'gal' && Ti.App.twoColumn == 'pt'){
-		answerBox.value = (entry.value * 8);
+		answerBox.value = (entry.value * 8 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'gal' && Ti.App.twoColumn == 'qt'){
-		answerBox.value = (entry.value * 4);
+		answerBox.value = (entry.value * 4 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'gal' && Ti.App.twoColumn == 'tsp'){
-		answerBox.value = (entry.value * 639.494);
+		answerBox.value = (entry.value * 639.494 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'gal' && Ti.App.twoColumn == 'tbsp'){
-		answerBox.value = (entry.value * 213.165);
+		answerBox.value = (entry.value * 213.165 * Ti.App.zeroColumn);
 	}
 	
 	//Teaspoon conversions
 	else if (Ti.App.oneColumn == 'tsp' && Ti.App.twoColumn == 'ml'){
-		answerBox.value = (entry.value * 5.91939);
+		answerBox.value = (entry.value * 5.91939 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tsp' && Ti.App.twoColumn == 'l'){
-		answerBox.value = (entry.value * 0.00591939);
+		answerBox.value = (entry.value * 0.00591939 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tsp' && Ti.App.twoColumn == 'fl oz'){
-		answerBox.value = (entry.value * 0.200158);
+		answerBox.value = (entry.value * 0.200158 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tsp' && Ti.App.twoColumn == 'shot'){
-		answerBox.value = (entry.value * 0.13343867);
+		answerBox.value = (entry.value * 0.13343867 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tsp' && Ti.App.twoColumn == 'c'){
-		answerBox.value = (entry.value * 0.0250198);
+		answerBox.value = (entry.value * 0.0250198 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tsp' && Ti.App.twoColumn == 'pt'){
-		answerBox.value = (entry.value * 0.0125099);
+		answerBox.value = (entry.value * 0.0125099 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tsp' && Ti.App.twoColumn == 'qt'){
-		answerBox.value = (entry.value * 0.00625495);
+		answerBox.value = (entry.value * 0.00625495 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tsp' && Ti.App.twoColumn == 'gal'){
-		answerBox.value = (entry.value * 0.00156374);
+		answerBox.value = (entry.value * 0.00156374 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tsp' && Ti.App.twoColumn == 'tbsp'){
-		answerBox.value = (entry.value * 0.333333);
+		answerBox.value = (entry.value * 0.333333 * Ti.App.zeroColumn);
 	}
 	
 	//Tablespoon conversions
 	else if (Ti.App.oneColumn == 'tbsp' && Ti.App.twoColumn == 'ml'){
-		answerBox.value = (entry.value * 17.7582);
+		answerBox.value = (entry.value * 17.7582 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tbsp' && Ti.App.twoColumn == 'l'){
-		answerBox.value = (entry.value * 0.0177582);
+		answerBox.value = (entry.value * 0.0177582 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tbsp' && Ti.App.twoColumn == 'fl oz'){
-		answerBox.value = (entry.value * 0.600475);
+		answerBox.value = (entry.value * 0.600475 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tbsp' && Ti.App.twoColumn == 'shot'){
-		answerBox.value = (entry.value * 0.40031667);
+		answerBox.value = (entry.value * 0.40031667 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tbsp' && Ti.App.twoColumn == 'c'){
-		answerBox.value = (entry.value * 0.0750594);
+		answerBox.value = (entry.value * 0.0750594 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tbsp' && Ti.App.twoColumn == 'pt'){
-		answerBox.value = (entry.value * 0.0375297);
+		answerBox.value = (entry.value * 0.0375297 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tbsp' && Ti.App.twoColumn == 'qt'){
-		answerBox.value = (entry.value * 0.0187649);
+		answerBox.value = (entry.value * 0.0187649 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tbsp' && Ti.App.twoColumn == 'gal'){
-		answerBox.value = (entry.value * 0.00469121);
+		answerBox.value = (entry.value * 0.00469121 * Ti.App.zeroColumn);
 	}
 	else if (Ti.App.oneColumn == 'tbsp' && Ti.App.twoColumn == 'tsp'){
-		answerBox.value = (entry.value * 3);
+		answerBox.value = (entry.value * 3 * Ti.App.zeroColumn);
 	}
 	
 };
@@ -2126,8 +2157,14 @@ if(isAndroid){
 		enableReturnKey: true,
 		suppressReturn : false,
 	});
+	
+	notesText.addEventListener('done', function()
+	{
+    	notesText.blur();
+	});
 }
-//If iphone or other device then....
+
+//If iOS device then...
 else{
     //Create label to alert user that a text area is below
 	var label1 = Ti.UI.createLabel({
@@ -2173,8 +2210,6 @@ else{
 		notesText.blur();
 	});
 }
-
-
 
 //Add components to window
 view3.add(label1);
