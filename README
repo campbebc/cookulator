@@ -1,9 +1,38 @@
-Welcome to your Appcelerator Titanium Mobile Project
+Welcome to the Cookulator Mobile App
 
-This is tabbed application, consisting of multiple stacks of windows associated with tabs in a tab group.  A starting point for tab-based application with multiple top-level windows. Requires Titanium Mobile SDK 1.8.0+.
+Last changed: Tuesday, April 29, 2014 5:35pm EST
 
 ----------------------------------
-Stuff our legal folk make us say:
+
+Scenario: 
+ - Jenny has just moved to the United States from Japan and found a new recipe 
+   for Teriyaki Chicken at the local grocery store. However, she is unfamiliar 
+   with the units of measurement that were on the recipe. She wishes she could 
+   convert these amounts into mL (milliliter) measurements so she can use her 
+   old measuring cup that she has already unpacked.
+
+----------------------------------
+
+Features:
+ - Basic Calculator
+ - Unit Conversions (Distance, Weight, Volume) automatically run through change events
+ - Ability to store calculations and conversions in the Notes page
+ - Shake to clear functionality
+
+----------------------------------
+
+Titanium Appcelerator Documentation and Best Practices:
+https://docs.google.com/document/d/1J3hV_-2MBG7BjRzfw3Ni14ypvGG1uEZ-rVfm49Vklx0/edit?usp=sharing
+
+----------------------------------
+
+Acknowledgements:
+ - Dr. Emil Salib, JMU
+ - Dr. Morgan Benton, JMU
+ - Titanium Appcelerator Community
+
+----------------------------------
+Legal information from Appcelerator:
 
 Appcelerator, Appcelerator Titanium and associated marks and logos are 
 trademarks of Appcelerator, Inc. 
@@ -12,3 +41,4 @@ Titanium is Copyright (c) 2009-2013 by Appcelerator, Inc. All Rights Reserved.
 
 Titanium is licensed under the Apache Public License (Version 2). Please
 see the LICENSE file for the full license.
+----------------------------------
