@@ -1030,7 +1030,7 @@ if(isAndroid){
 		top: "9%",
 		left: "1%",
 		width: "49%",
-		height: "12%",
+		height: "10%",
 		textAlign: 'left',
 		font:{fontSize:"20%",fontFamily:'Roboto-Light', fontWeight:'bold'},
 		hintText: 'Enter value'
@@ -1047,18 +1047,50 @@ if(isAndroid){
 		top: "9%",
 		left: "50%",
 		width: "49%",
-		height: "12%",
+		height: "10%",
 		enabled: false, // disables OS keyboard to launch
 		textAlign: 'left',
 		font:{fontSize:"20%",fontFamily:'Roboto-Light', fontWeight:'bold'},
 		hintText: ' ='
 	});
 	
+	var label = Ti.UI.createLabel({
+		color: '#F27935',
+		font: { fontSize:'15%' },
+		text: 'Multiplier | Convert | Convert',
+		textAlign: 'center',
+		top: "19%",
+		height: "5%",
+		width: Ti.UI.SIZE, 
+		height: Ti.UI.SIZE
+	});	
+	
 	var picker = Ti.UI.createPicker({
-		top:"21%",
+		top:"24%",
 		useSpinner: true
 	});
-		
+			
+	//Will send result in "answerBox" to the notes tab
+	var clearButton2 = Titanium.UI.createButton({
+		color:'#FFFFFF',
+		backgroundColor: '#F27935',
+		borderColor: '#000000',
+		font: { fontSize:'30%', fontWeight:'bold', fontFamily:'Roboto-Light' },
+		title: 'CLEAR',
+		textAlign: 'center',
+		top: "60%",
+		left: "50%",
+		height: "10%",
+		width: "100%"
+	});
+	
+	view2.add(clearButton2);
+	
+	clearButton2.addEventListener('click', function(e){
+		entry.value = '';
+		answerBox.value = '';
+	});
+	
 	//Will send result in "answerBox" to the notes tab
 	var sendButtonTwo = Titanium.UI.createButton({
 		color:'#FFFFFF',
@@ -1067,23 +1099,22 @@ if(isAndroid){
 		font: { fontSize:'30%', fontWeight:'bold', fontFamily:'Roboto-Light' },
 		title: 'SEND TO NOTES',
 		textAlign: 'center',
-		top: "57%",
+		top: "70%",
 		height: "10%",
-		width: "50%"
+		width: "100%"
 	});
 	
 	//Will send result in "answerBox" to the notes tab
-	var clearButton = Titanium.UI.createButton({
+	var sendButtonThree = Titanium.UI.createButton({
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
 		borderColor: '#000000',
 		font: { fontSize:'30%', fontWeight:'bold', fontFamily:'Roboto-Light' },
-		title: 'SEND TO NOTES',
+		title: 'SEND TO CALCULATOR',
 		textAlign: 'center',
-		top: "57%",
-		left: "50%",
+		top: "80%",
 		height: "10%",
-		width: "50%"
+		width: "100%"
 	});
 }
 
@@ -1150,7 +1181,7 @@ else{
 		top: "13%",
 		left: "0%",
 		width: "50%",
-		height: "12%",
+		height: "10%",
 		textAlign: 'left',
 		font:{fontSize:"25%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
 		hintText: 'Enter value'
@@ -1164,7 +1195,7 @@ else{
 		top: "13%",
 		left: "50%",
 		width: "50%",
-		height: "12%",
+		height: "10%",
 		enabled: false, // disables OS keyboard to launch
 		textAlign: 'left',
 		font:{fontSize:"30%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
@@ -1176,43 +1207,44 @@ else{
 		font: { fontSize:'15%' },
 		text: 'Multiplier | Convert | Convert',
 		textAlign: 'center',
-		top: "25%",
+		top: "23%",
 		height: "5%",
 		width: Ti.UI.SIZE, 
 		height: Ti.UI.SIZE
 	});	
 		
 	var picker = Ti.UI.createPicker({
-		top:"30%",
+		top:"29%",
 		useSpinner: true
 	});
 		
+	
 	//Will send result in "answerBox" to the notes tab
 	var sendButtonTwo = Titanium.UI.createButton({
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
 		borderColor: '#000000',
-		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
-		title: 'SEND',
+		font: { fontSize:'25%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+		title: 'SEND TO NOTES',
 		textAlign: 'center',
 		top: "72%",
 		left: "0%",
 		height: "10%",
-		width: "50%"
+		width: "100%"
 	});
 	
-	//Will clear both fields
-	var clearButton = Titanium.UI.createButton({
+	//Will send result in "answerBox" to the notes tab
+	var sendButtonThree = Titanium.UI.createButton({
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
 		borderColor: '#000000',
-		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
-		title: 'CLEAR',
+		font: { fontSize:'25%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
+		title: 'SEND TO CALCULATOR',
 		textAlign: 'center',
-		top: "72%",
-		left: "50%",
+		top: "82%",
+		left: "0%",
 		height: "10%",
-		width: "50%"
+		width: "100%"
 	});
 	
 	function AddKeyboardToolbar(entry)
@@ -1274,16 +1306,15 @@ view2.add(entry);
 view2.add(answerBox);
 view2.add(label);
 view2.add(sendButtonTwo);
-view2.add(clearButton);
+view2.add(sendButtonThree);
 
 sendButtonTwo.addEventListener('click', function(e) {
 	Titanium.API.info ('in event listener ' + e);
     notesText.value = notesText.value + '\n' + entry.value + " " + Ti.App.oneColumn +  " x " + Ti.App.zeroColumn + " = " + answerBox.value + " " + Ti.App.twoColumn; 
 });
 
-clearButton.addEventListener('click', function(e){
-	entry.value = '';
-	answerBox.value = '';
+sendButtonThree.addEventListener('click', function(e) {
+	textbox.value = answerBox.value; 
 });
 
 Ti.Gesture.addEventListener("shake", function(e){
