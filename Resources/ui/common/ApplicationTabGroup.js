@@ -1171,8 +1171,19 @@ else{
 		hintText: ' ='
 	});
 		
+	var label = Ti.UI.createLabel({
+		color: '#F27935',
+		font: { fontSize:'15%' },
+		text: 'Multiplier | Convert | Convert',
+		textAlign: 'center',
+		top: "25%",
+		height: "5%",
+		width: Ti.UI.SIZE, 
+		height: Ti.UI.SIZE
+	});	
+		
 	var picker = Ti.UI.createPicker({
-		top:"25%",
+		top:"30%",
 		useSpinner: true
 	});
 		
@@ -1184,7 +1195,7 @@ else{
 		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
 		title: 'SEND',
 		textAlign: 'center',
-		top: "67%",
+		top: "72%",
 		left: "0%",
 		height: "10%",
 		width: "50%"
@@ -1198,7 +1209,7 @@ else{
 		font: { fontSize:'35%', fontWeight:'bold', fontFamily:'HelveticaNeue-Light' },
 		title: 'CLEAR',
 		textAlign: 'center',
-		top: "67%",
+		top: "72%",
 		left: "50%",
 		height: "10%",
 		width: "50%"
@@ -1261,12 +1272,13 @@ view2.add(weightButton);
 view2.add(cookingButton);
 view2.add(entry);
 view2.add(answerBox);
+view2.add(label);
 view2.add(sendButtonTwo);
 view2.add(clearButton);
 
 sendButtonTwo.addEventListener('click', function(e) {
 	Titanium.API.info ('in event listener ' + e);
-    notesText.value = notesText.value + '\n' + entry.value + " " + Ti.App.oneColumn + " = " + answerBox.value + " " + Ti.App.twoColumn; 
+    notesText.value = notesText.value + '\n' + entry.value + " " + Ti.App.oneColumn +  " x " + Ti.App.zeroColumn + " = " + answerBox.value + " " + Ti.App.twoColumn; 
 });
 
 clearButton.addEventListener('click', function(e){
@@ -1431,7 +1443,7 @@ var convertEvent = function(e){
 	
 	//If both picker columns are the same then the answer is simply the entry	
 	if (Ti.App.oneColumn == Ti.App.twoColumn){
-		answerBox.value = entry.value;
+		answerBox.value = (entry.value * Ti.App.zeroColumn);
 	}
 	//Millimeter conversions
 	else if (Ti.App.oneColumn == 'mm' && Ti.App.twoColumn == 'cm'){
