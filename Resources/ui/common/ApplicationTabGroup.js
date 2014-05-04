@@ -74,6 +74,8 @@ var nextOperator = '';
   expression so this is initialized to false. */
 var decimalPointConcatenated = false;
 
+
+//Determines the type of device that the application is being built on
 var isAndroid = false;
 if(Titanium.Platform.name == 'android'){
     isAndroid = true;
@@ -366,6 +368,8 @@ if(isAndroid){
 		font:{fontSize:"50%",fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});
 }
+
+//If not android...
 else{	 
 	var textbox = Titanium.UI.createTextField({
 		color: '#FFFFFF',
