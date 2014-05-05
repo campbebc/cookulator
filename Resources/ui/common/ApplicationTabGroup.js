@@ -32,6 +32,7 @@ function ApplicationTabGroup(Window) {
 		win2 = new Window(L('Conversion'));
 		win3 = new Window(L('Notes'));
 
+//Tab 1 - Calculator
 if(isAndroid){	
 	var tab1 = Ti.UI.createTab({
 		title: L('Calculator'),
@@ -40,6 +41,7 @@ if(isAndroid){
 		layout:'vertical'
 	});
 }
+//If iOS device then...
 else{
 	var tab1 = Ti.UI.createTab({
 		title: L('Calculator'),
@@ -49,12 +51,14 @@ else{
 	});
 }	
 
+//Create view that is the full screen size of the device		
 var view1 = Ti.UI.createView({
     width:'100%',
     height:'100%',
     backgroundColor: '#FFFFFF',
 });
 
+//Add view to the window
 win1.add(view1);
 
 /*** Global variables. ***/
@@ -89,7 +93,8 @@ if(Titanium.Platform.name == 'android'){
   to a float value and converted back to a string. This
   textbox also responds to all the buttons displayed and
   not to its corresponding OS' keyboard. */
- 
+
+//If device detected is an Android device then .... 
 if(isAndroid){
 	var textbox = Titanium.UI.createTextField({
 		color: '#FFFFFF',
@@ -369,7 +374,7 @@ if(isAndroid){
 	});
 }
 
-//If not android...
+//If iOS device then...
 else{	 
 	var textbox = Titanium.UI.createTextField({
 		color: '#FFFFFF',
@@ -656,101 +661,89 @@ textbox.addEventListener('change', function(e){
 	    }
 	});
 
-clearButton.addEventListener('click', function(e) {
 /* This is the listener for the Clear Button. */
-
-textbox.value = '0'; // Resets the textbox to '0'
-renew = true; // Indicate that a new expression should be made
-nextOperator = '';   // Resets so that there was no previous operation to do
-decimalPointConcatenated = false; // Indicate that a decimal point can now be added
+clearButton.addEventListener('click', function(e) {
+	textbox.value = '0'; // Resets the textbox to '0'
+	renew = true; // Indicate that a new expression should be made
+	nextOperator = '';   // Resets so that there was no previous operation to do
+	decimalPointConcatenated = false; // Indicate that a decimal point can now be added
 });
 
-bigWideZeroButton.addEventListener('click', function(e) {
 /* This is the listener for the Zero Button */
-
+bigWideZeroButton.addEventListener('click', function(e) {
 // If the value of the textbox does not equal to the
 // initiliaze '0' value, then concatenate the '0' 
 // character to the textbox by calling the 
 // buttonFunction(expression);
-if ( textbox.value.length > 0 && textbox.value != '0' )
-buttonFunction('0');	
+	if ( textbox.value.length > 0 && textbox.value != '0' )
+		buttonFunction('0');	
 });
 
-oneButton.addEventListener('click', function(e) {
 /* This is the listener for One Button */
-
+oneButton.addEventListener('click', function(e) {
 // Call the buttonFunction(expression); 
 // concatenate '1' to the textbox value
-buttonFunction('1');
+	buttonFunction('1');
 });
 
-twoButton.addEventListener('click', function(e) {
 /* This is the listener for Two Button */
-
+twoButton.addEventListener('click', function(e) {
 // Call the buttonFunction(expression); 
 // concatenate '2' to the textbox value
-buttonFunction('2');
+	buttonFunction('2');
 });
 
-threeButton.addEventListener('click', function(e) {
 /* This is the listener for Three Button */
-
+threeButton.addEventListener('click', function(e) {
 // Call the buttonFunction(expression); 
 // concatenate '3' to the textbox value
-buttonFunction('3');
+	buttonFunction('3');
 });
 
-fourButton.addEventListener('click', function(e) {
 /* This is the listener for Four Button */
-
+fourButton.addEventListener('click', function(e) {
 // Call the buttonFunction(expression); 
 // concatenate '4' to the textbox value
-buttonFunction('4');
+	buttonFunction('4');
 });
 
-fiveButton.addEventListener('click', function(e) {
 /* This is the listener for Five Button */
-
+fiveButton.addEventListener('click', function(e) {
 // Call the buttonFunction(expression); 
 // concatenate '5' to the textbox value
-buttonFunction('5');
+	buttonFunction('5');
 });
 
-sixButton.addEventListener('click', function(e) {
 /* This is the listener for Six Button */
-
+sixButton.addEventListener('click', function(e) {
 // Call the buttonFunction(expression); 
 // concatenate '6' to the textbox value
-buttonFunction('6');
+	buttonFunction('6');
 });
 
-sevenButton.addEventListener('click', function(e) {
 /* This is the listener for Seven Button */
-
+sevenButton.addEventListener('click', function(e) {
 // Call the buttonFunction(expression); 
 // concatenate '7' to the textbox value
-buttonFunction('7');
+	buttonFunction('7');
 });
 
-eightButton.addEventListener('click', function(e) {
 /* This is the listener for Eight Button */
-
+eightButton.addEventListener('click', function(e) {
 // Call the buttonFunction(expression); 
 // concatenate '8' to the textbox value
-buttonFunction('8');
+	buttonFunction('8');
 });
 
-nineButton.addEventListener('click', function(e) {
 /* This is the listener for Nine Button */
-
+nineButton.addEventListener('click', function(e) {
 // Call the buttonFunction(expression); 
 // concatenate '9' to the textbox value
-buttonFunction('9');
+	buttonFunction('9');
 });
 
-decimalPointButton.addEventListener('click', function(e) {
 /* This is the listener for Decimal Point Button */
-
+decimalPointButton.addEventListener('click', function(e) {
 // If there is already a decimal point, there is no 
 // need to add another one. Therefore, this listener
 // will not do anything.
@@ -767,9 +760,9 @@ else
 // one decimal point has been included to
 // the current expression so that there
 // should not be more than one decimal
-decimalPointConcatenated = true;
+	decimalPointConcatenated = true;
 // Concatenate the '.'
-buttonFunction('.');
+	buttonFunction('.');
 }
 });
 
@@ -779,9 +772,8 @@ sendButton.addEventListener('click', function(e) {
     notesText.value = notesText.value + '\n' + textbox.value; 
 });
 
-minusButton.addEventListener('click', function(e) {
 /* This is the listener to the Minus Button */
-
+minusButton.addEventListener('click', function(e) {
 // The user has indicated the subtraction operation
 // so the app must enable user to type the next
 // expression to be evaluated with this operation.
@@ -789,13 +781,12 @@ minusButton.addEventListener('click', function(e) {
 // doOperation(operator, current); function and
 // pass this operator along with the current
 // value of the textbox.
-renew = true;
-doOperation('-', textbox.value);
+	renew = true;
+	doOperation('-', textbox.value);
 });
 
-plusButton.addEventListener('click', function(e) {
 /* This is the listener to the Plus Button */
-
+plusButton.addEventListener('click', function(e) {
 // The user has indicated the addition operation
 // so the app must enable user to type the next
 // expression to be evaluated with this operation.
@@ -803,13 +794,12 @@ plusButton.addEventListener('click', function(e) {
 // doOperation(operator, current); function and
 // pass this operator along with the current
 // value of the textbox.
-renew = true;
-doOperation('+', textbox.value);
+	renew = true;
+	doOperation('+', textbox.value);
 });
 
-multiplyButton.addEventListener('click', function(e) {
 /* This is the listener to the Multiply Button */
-
+multiplyButton.addEventListener('click', function(e) {
 // The user has indicated the multiplication operation
 // so the app must enable user to type the next
 // expression to be evaluated with this operation.
@@ -817,13 +807,12 @@ multiplyButton.addEventListener('click', function(e) {
 // doOperation(operator, current); function and
 // pass this operator along with the current
 // value of the textbox.
-renew = true;
-doOperation('x', textbox.value);
+	renew = true;
+	doOperation('x', textbox.value);
 });
 
-divideButton.addEventListener('click', function(e) {
 /* This is the listener to the Divide Button */
-
+divideButton.addEventListener('click', function(e) {
 // The user has indicated the division operation
 // so the app must enable user to type the next
 // expression to be evaluated with this operation.
@@ -831,13 +820,12 @@ divideButton.addEventListener('click', function(e) {
 // doOperation(operator, current); function and
 // pass this operator along with the current
 // value of the textbox.
-renew = true;
-doOperation('/', textbox.value);
+	renew = true;
+	doOperation('/', textbox.value);
 });
 
-equalsButton.addEventListener('click', function(e) {
 /* This is the listener to the Equals Button */
-
+equalsButton.addEventListener('click', function(e) {
 // The user has indicated to execute the most
 // recently chosen operation. But we reset
 // renew to true so that the user can type-in
@@ -845,8 +833,8 @@ equalsButton.addEventListener('click', function(e) {
 // call doOperation(operator, current); function
 // and pass the equal character along with the 
 // current value of the textbox.
-renew = true;
-doOperation('=', textbox.value);
+	renew = true;
+	doOperation('=', textbox.value);
 });
 
 function buttonFunction(expression)
@@ -866,8 +854,8 @@ function buttonFunction(expression)
 // value remains the same.
 if ( renew )
 {
-renew = false;
-textbox.value = expression;
+	renew = false;
+	textbox.value = expression;
 }
 // If variable renew is false, the user desires to 
 // add more digits to the current expression. So,
@@ -898,8 +886,8 @@ current = parseFloat(current);
 */
 if ( nextOperator.length == 0 ) 
 {
-nextOperator = operator;
-answer = current;
+	nextOperator = operator;
+	answer = current;
 }
 /* If variable nextOperator is NOT empty, this means that there
   is a previously indicated operation that must now be 
@@ -907,14 +895,14 @@ answer = current;
   including the equal sign expression. */
 else
 {
-switch ( nextOperator )
-{
-case '+': answer = answer + current; break;
-case '-': answer = answer - current; break;
-case 'x': answer = answer * current; break;
-case '/': answer = answer / current; break;
-case '=': answer = current; break;
-}
+	switch ( nextOperator )
+	{
+		case '+': answer = answer + current; break;
+		case '-': answer = answer - current; break;
+		case 'x': answer = answer * current; break;
+		case '/': answer = answer / current; break;
+		case '=': answer = current; break;
+	}
 }
 
 /* By this time, the answer has been calculated. But it is 
@@ -932,7 +920,7 @@ decimalPointConcatenated = false;
 
 }
 
-//Add all buttons to first tab
+//Add all buttons and objects to first view
 view1.add(textbox);
 view1.add(clearButton);
 view1.add(sevenButton);
@@ -953,9 +941,10 @@ view1.add(sendButton);
 view1.add(divideButton);
 view1.add(multiplyButton);
 
-// Tab 2 that displays following 
+// Tab 2 - Conversion 
 Titanium.UI.setBackgroundColor('#000');
 
+//If device detected is an Android device then ....
 if(isAndroid){
 	var tab2 = Ti.UI.createTab({
 		title: L('Conversion'),
@@ -964,6 +953,7 @@ if(isAndroid){
 		layout:'vertical'
 	});
 }
+//If iOS device then...
 else{
 	var tab2 = Ti.UI.createTab({
 		title: L('Conversion'),
@@ -973,13 +963,14 @@ else{
 	});
 }
 	
-	
+//Create view that is the full screen size of the device		
 var view2 = Ti.UI.createView({
     width:'100%',
     height:'100%',
     backgroundColor: '#FFFFFF',
 });
 
+//Add view to the window
 win2.add(view2);	
 
 //If device detected is an Android device then ....
@@ -1024,7 +1015,8 @@ if(isAndroid){
 		font:{fontSize:'18%',fontFamily:'Roboto-Light', fontWeight:'bold'}
 	});	
 	
-	//Text field for user to enter initial value to be converted
+	//Text field for user to enter initial value to be converted.
+	//Currently experiencing issues with this keyboard.
 	var entry = Titanium.UI.createTextField({
 		color: '#000000',
 		backgroundColor: '#FFFFFF',
@@ -1039,12 +1031,14 @@ if(isAndroid){
 		font:{fontSize:"20%",fontFamily:'Roboto-Light', fontWeight:'bold'},
 		hintText: 'Enter value'
 	});
-	
+
+	//Event listener to blur keyboard when done button is pressed	
 	entry.addEventListener('done', function()
 	{
     	entry.blur();
 	});
 
+	//Text field where converted answer will appear
 	var answerBox = Titanium.UI.createTextField({
 		color: '#000000',
 		backgroundColor: '#FFFFFF',
@@ -1057,7 +1051,8 @@ if(isAndroid){
 		font:{fontSize:"20%",fontFamily:'Roboto-Light', fontWeight:'bold'},
 		hintText: ' ='
 	});
-	
+
+	//Label for the picker columns 	
 	var label = Ti.UI.createLabel({
 		color: '#F27935',
 		font: { fontSize:'15%' },
@@ -1069,12 +1064,13 @@ if(isAndroid){
 		height: Ti.UI.SIZE
 	});	
 	
+	//Create picker object that uses default spinner	
 	var picker = Ti.UI.createPicker({
 		top:"24%",
 		useSpinner: true
 	});
 			
-	//Will send result in "answerBox" to the notes tab
+	//Clear button
 	var clearButton2 = Titanium.UI.createButton({
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
@@ -1090,12 +1086,13 @@ if(isAndroid){
 	
 	view2.add(clearButton2);
 	
+	//Event listener that will clear entry and answerBox on click	
 	clearButton2.addEventListener('click', function(e){
 		entry.value = '';
 		answerBox.value = '';
 	});
 	
-	//Will send result in "answerBox" to the notes tab
+	//Send to notes button
 	var sendButtonTwo = Titanium.UI.createButton({
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
@@ -1108,7 +1105,7 @@ if(isAndroid){
 		width: "100%"
 	});
 	
-	//Will send result in "answerBox" to the notes tab
+	//Send to calculator button
 	var sendButtonThree = Titanium.UI.createButton({
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
@@ -1122,7 +1119,7 @@ if(isAndroid){
 	});
 }
 
-//If iphone or other device then....
+//If iOS device then...
 else{
 	//Distance button opens distance measurement tables
 	var distanceButton = Titanium.UI.createButton({
@@ -1166,12 +1163,13 @@ else{
 		font:{fontSize:'18%',fontFamily:'HelveticaNeue-Light', fontWeight:'bold'}
 	});	
 	
-	
+	//Create done button for iOS keyboard
 	var doneButton = Ti.UI.createButton({
 	    systemButton:Ti.UI.iPhone.SystemButton.DONE,
 	    right:0
 	});
 	 
+	//Add doneButton to the view 
 	view2.add(doneButton);
  
 	//Text field for user to enter initial value to be converted
@@ -1191,6 +1189,7 @@ else{
 		hintText: 'Enter value'
 	});
 
+	//Text field where converted answer will appear
 	var answerBox = Titanium.UI.createTextField({
 		borderStyle: Ti.UI.INPUT_BORDERSTYLE_LINE,
 		borderWidth: 1,
@@ -1205,7 +1204,8 @@ else{
 		font:{fontSize:"30%",fontFamily:'HelveticaNeue-Light', fontWeight:'bold'},
 		hintText: ' ='
 	});
-		
+	
+	//Label for the picker columns 		
 	var label = Ti.UI.createLabel({
 		color: '#F27935',
 		font: { fontSize:'15%' },
@@ -1216,14 +1216,15 @@ else{
 		width: Ti.UI.SIZE, 
 		height: Ti.UI.SIZE
 	});	
-		
+	
+	//Create picker object that uses default spinner		
 	var picker = Ti.UI.createPicker({
 		top:"29%",
 		useSpinner: true
 	});
 		
 	
-	//Will send result in "answerBox" to the notes tab
+	//Send to notes button
 	var sendButtonTwo = Titanium.UI.createButton({
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
@@ -1237,7 +1238,7 @@ else{
 		width: "100%"
 	});
 	
-	//Will send result in "answerBox" to the notes tab
+	//Send to calculator button
 	var sendButtonThree = Titanium.UI.createButton({
 		color:'#FFFFFF',
 		backgroundColor: '#F27935',
@@ -1253,25 +1254,25 @@ else{
 	
 	function AddKeyboardToolbar(entry)
 {
-  // Add a toolbar on top of the keyboard that includes a Done
-  //   button to blur focus (uses iOS buttons)
-  var flexSpace = Ti.UI.createButton({
-      systemButton:Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE,
-      right:0
-  });
-  var doneButton = Ti.UI.createButton({
-      systemButton:Ti.UI.iPhone.SystemButton.DONE,
-      right:0
-  });
+  	//Add a toolbar on top of the keyboard that includes a Done
+  	//button to blur focus (uses iOS buttons)
+	var flexSpace = Ti.UI.createButton({
+    	systemButton:Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE,
+        right:0
+  	});
+  	var doneButton = Ti.UI.createButton({
+    	systemButton:Ti.UI.iPhone.SystemButton.DONE,
+      	right:0
+  	});
  
-  entry.keyboardToolbar = [flexSpace, doneButton];
-  entry.addEventListener('focus', function(e) {
-      TheEdit.keyboardToolbar = [flexSpace, doneButton];
-      doneButton.activeFld = entry;
-      });
-  doneButton.addEventListener('click', function(e) {
-      e.source.activeFld.blur();
-      });
+  	entry.keyboardToolbar = [flexSpace, doneButton];
+  	entry.addEventListener('focus', function(e) {
+      	TheEdit.keyboardToolbar = [flexSpace, doneButton];
+      	doneButton.activeFld = entry;
+    });
+  	doneButton.addEventListener('click', function(e) {
+     	e.source.activeFld.blur();
+    });
 };
 
 	//Blur keyboard upon click
@@ -1280,7 +1281,7 @@ else{
 });
 }
 	
-
+//Populates picker with distances on click
 distanceButton.addEventListener('click', function() {
     dataLoad(distance1,firstColumn);
     dataLoad(distance1,secondColumn);
@@ -1288,6 +1289,7 @@ distanceButton.addEventListener('click', function() {
     picker.reloadColumn(secondColumn);
 });
 
+//Populates picker with weights on click
 weightButton.addEventListener('click', function() {
     dataLoad(weight1,firstColumn);
     dataLoad(weight1,secondColumn);
@@ -1295,6 +1297,7 @@ weightButton.addEventListener('click', function() {
     picker.reloadColumn(secondColumn); 
 });
 
+//Populates picker with cooking measurements on click
 cookingButton.addEventListener('click', function() {
     dataLoad(cooking1,firstColumn);
     dataLoad(cooking1,secondColumn);
@@ -1312,15 +1315,18 @@ view2.add(label);
 view2.add(sendButtonTwo);
 view2.add(sendButtonThree);
 
+//Properly formats text to be sent to the notes page with unit labels
 sendButtonTwo.addEventListener('click', function(e) {
 	Titanium.API.info ('in event listener ' + e);
     notesText.value = notesText.value + '\n' + entry.value + " " + Ti.App.oneColumn +  " x " + Ti.App.zeroColumn + " = " + answerBox.value + " " + Ti.App.twoColumn; 
 });
 
+//Sets conversion result to the current value of the calculator answerBox
 sendButtonThree.addEventListener('click', function(e) {
 	textbox.value = answerBox.value; 
 });
 
+//Device shake gesture clears the entry and answerBox fields
 Ti.Gesture.addEventListener("shake", function(e){
 	entry.value = '';
 	answerBox.value = '';
@@ -1331,6 +1337,7 @@ entry.addEventListener('change', function(e){
     e.source.value = e.source.value.slice(0,9);
 });
  
+//Distances used for pickers 
 var distance1 = [
     {title: "Millimeter", val:"mm"},
     {title: "Centimeter", val:"cm"},
@@ -1341,7 +1348,7 @@ var distance1 = [
     {title: "Yard", val:"yd"},
     {title: "Mile", val:"mi"}
 ];
-  
+//Weights used for pickers 
 var weight1 = [
     {title: "Carat", val:"ct"}, 
     {title: "Gram", val:"g"},
@@ -1352,7 +1359,7 @@ var weight1 = [
     {title: "Pound", val:"lb"},
     {title: "Metric Ton", val:"t"}
 ];
-
+//Cooking measurments used for pickers 
 var cooking1 = [
     {title: "Milliliter", val:"ml"},   
     {title: "Liter", val:"L"},
@@ -1365,7 +1372,7 @@ var cooking1 = [
     {title: "Teaspoon", val:"tsp"},
     {title: "Tablespoon", val:"tbsp"}
 ];
-
+//Standard multiplier integers used for pickers
 var multiplier = [
 	{title: "1", val: "1"},
 	{title: "2", val: "2"},
@@ -1379,6 +1386,7 @@ var multiplier = [
 	{title: "10", val: "10"},
 ];
 
+//Create picker column for multiplier array
 var zeroColumn = Ti.UI.createPickerColumn({
     width: 50
 });
@@ -1390,7 +1398,8 @@ for (var x = 0; x < multiplier.length; x++)
         val:multiplier[x].val
     }));
 }
- 
+
+//Create picker column for "convert from" 
 var firstColumn = Ti.UI.createPickerColumn({
     width: 140
 });
@@ -1402,7 +1411,8 @@ for (var x = 0; x < cooking1.length; x++)
         val:cooking1[x].val
     }));
 }
- 
+
+//Create picker column for "convert to"  
 var secondColumn = Ti.UI.createPickerColumn({
     width: 140,
     textAlign: 'right'
@@ -1414,10 +1424,14 @@ for (var x = 0; x < cooking1.length; x++){
         val:cooking1[x].val
     }));
 }
- 
+
+//Shows the selected item 
 picker.selectionIndicator = true;
+
+//Add the three columns to the picker
 picker.add([zeroColumn,firstColumn,secondColumn]);
  
+//Add the picker to the view 
 view2.add(picker);
 
 //Set starting selections for picker
@@ -1425,6 +1439,7 @@ picker.setSelectedRow(0, 0, false);
 picker.setSelectedRow(1, 3, false); 
 picker.setSelectedRow(2, 5, false);
  
+//Loads the data into the picker by determining number of rows needed based on size of the array 
 function dataLoad(data,column)
 {
     var dataLth=data.length;
@@ -1458,6 +1473,7 @@ function dataLoad(data,column)
  
 }
 
+//Declare both "convert" picker columns to be intially null
 Ti.App.oneColumn = 'Null';
 Ti.App.twoColumn = 'Null';
 
@@ -1469,14 +1485,15 @@ entry.addEventListener('change',function(e){
 picker.addEventListener('change',function(e){
 	convertEvent(e);
 });
-		
+
+//Runs the conversion based off of the entry, zeroColumn, oneColumn, and twoColumn values		
 var convertEvent = function(e){	
 	
 	Ti.App.zeroColumn = picker.getSelectedRow(0).val;
 	Ti.App.oneColumn = picker.getSelectedRow(1).val;
 	Ti.App.twoColumn = picker.getSelectedRow(2).val;
 	
-	//If both picker columns are the same then the answer is simply the entry	
+	//If both picker columns are the same then the answer is simply the entry times the multiplier	
 	if (Ti.App.oneColumn == Ti.App.twoColumn){
 		answerBox.value = (entry.value * Ti.App.zeroColumn);
 	}
@@ -2136,11 +2153,13 @@ var convertEvent = function(e){
 	}
 	else if (Ti.App.oneColumn == 'tbsp' && Ti.App.twoColumn == 'tsp'){
 		answerBox.value = (entry.value * 3 * Ti.App.zeroColumn);
-	}
-	
+	}	
 };
 
 
+//Tab 3 - Notes
+
+//If device detected is an Android device then ....
 if(isAndroid){
 	var tab3 = Ti.UI.createTab({
 		title: L('Notes'),
@@ -2148,6 +2167,7 @@ if(isAndroid){
 		window: win3
 	});
 }
+//If iOS device then...
 else{
 	var tab3 = Ti.UI.createTab({
 		title: L('Notes'),
@@ -2155,13 +2175,15 @@ else{
 		window: win3
 	});
 }	
-	
+
+//Create view that is the full screen size of the device			
 var view3 = Ti.UI.createView({
     width:'100%',
     height:'100%',
     backgroundColor: '#FFFFFF',
 });
 
+//Add view to the window
 win3.add(view3);	
 
 //If device detected is an Android device then ....
